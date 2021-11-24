@@ -1,4 +1,5 @@
 package apap.group.assignment.SIFACTORY.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,16 +20,16 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter @Getter
+@Setter
+@Getter
 @Entity
 @Table(name = "request_update_item")
-public class RequestUpdateItemModel implements Serializable{
+public class RequestUpdateItemModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idRequestUpdateItem;
 
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(nullable = false)
     private String idItem;
 
     @Column(nullable = false)
@@ -50,12 +51,12 @@ public class RequestUpdateItemModel implements Serializable{
     @Column(nullable = false)
     private Boolean executed;
 
-    @OneToOne(fetch = FetchType.EAGER, optional=false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_delivery", referencedColumnName = "idDelivery", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DeliveryModel delivery;
 
-    @OneToOne(fetch = FetchType.EAGER, optional=false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_produksi", referencedColumnName = "idProduksi", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ProduksiModel produksi;
