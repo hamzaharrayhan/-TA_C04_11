@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <title> Home </title>
+    <object th:include="'fragments/'+${role} :: css" th:remove="tag"></object>
+    <object th:include="'fragments/'+${role} :: js" th:remove="tag"></object>
 </head>
+
 <body>
-    <nav th:replace="fragments/fragment :: navbar"></nav>
-    home
+<nav th:replace="'fragments/'+${role} :: navbar"></nav>
+<div class="d-flex justify-content-center">
+    <div class="m-4">
+        <h2 style="text-align: center" th:text="'Hello ' + ${#httpServletRequest.remoteUser} + '!'">Login as</h2>
+        <h2>Selamat datang di SI-FACTORY</h2>
+        <div class="d-flex justify-content-center">
+            <a th:href="@{/}" class="mx-2 btn btn-warning">ACTION</a>
+            <a th:href="@{/}" class="mx-2 btn btn-outline-warning">ACTION</a>
+        </div>
+        <div class=" my-3 d-flex justify-content-center">
+            <a th:href="@{/}" class="mx-2 btn btn-warning">ACTION</a>
+            <a th:href="@{/}" class="mx-2 btn btn-outline-warning">ACTION</a>
+        </div>
+        <div th:if="${role} == 'ROLE_ADMIN'" class="my-3 d-flex justify-content-center">
+            <a th:href="@{/}" class="mx-2 btn btn-outline-warning">ACTION FOR SPECIFIED ROLE</a>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>
