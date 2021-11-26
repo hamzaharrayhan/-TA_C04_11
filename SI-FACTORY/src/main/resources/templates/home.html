@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -9,5 +10,8 @@
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
     home
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/pegawai/add}" class="mx-2 btn btn-outline-warning">Tambah Pegawai Baru</a>
+    </div>
 </body>
 </html>
