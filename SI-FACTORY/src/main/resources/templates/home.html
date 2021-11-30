@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <head>
     <meta charset="UTF-8">
-    <title>home</title>
+    <title> Home </title>
+    <object th:include="'fragments/'+${role} :: css" th:remove="tag"></object>
+    <object th:include="'fragments/'+${role} :: js" th:remove="tag"></object>
 </head>
+
 <body>
-home
+<nav th:replace="'fragments/'+${role} :: navbar"></nav>
+<div class="d-flex justify-content-center">
+    <div class="m-4">
+        <h2 style="text-align: center" th:text="'Hello ' + ${#httpServletRequest.remoteUser} + '!'">Login as</h2>
+        <h2>Selamat datang di SI-FACTORY</h2>
+        <div class="d-flex justify-content-center">
+            <a th:href="@{/}" class="mx-2 btn btn-warning">ACTION</a>
+            <a th:href="@{/}" class="mx-2 btn btn-outline-warning">ACTION</a>
+        </div>
+        <div class=" my-3 d-flex justify-content-center">
+            <a th:href="@{/}" class="mx-2 btn btn-warning">ACTION</a>
+            <a th:href="@{/}" class="mx-2 btn btn-outline-warning">ACTION</a>
+        </div>
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/pegawai/add}" class="mx-2 btn btn-outline-warning">Tambah Pegawai Baru</a>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>

@@ -22,7 +22,7 @@ import java.util.List;
 public class RoleModel implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRole;
+    private Long idRole;
 
     @NotNull
     @Size(max=20)
