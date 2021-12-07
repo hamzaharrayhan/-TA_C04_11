@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Home </title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card m-4 p-4">
+                <div class="card-header">
+                    <h3 style="text-align: center">Tambah Pegawai Baru</h3>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/pegawai/add}" method="POST">
+                        <input type="hidden" name="username" th:value="${#httpServletRequest.userPrincipal.name}">
+                        <label>User Name</label>
+                        <input type="text" name="username" class="form-control" />
+
+                        <br>
+                        <label>Nama</label>
+                        <input type="text" name="nama" class="form-control" />
+
+                        <br>
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" />
+
+                        <br>
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" />
+
+                        <br>
+                        <label>Tanggal Lahir</label>
+                        <input type="date" name="tanggalLahir" class="form-control" />
+
+                        <br>
+                        <label>Role</label>
+                        <select name="role" class="form-control">
+                            <option selected value=""> -- Pilih Role -- </option>
+                            <option th:each="role : ${listRole}" th:value="${role.idRole}" th:text="${role.namaRole}"></option>
+                        </select>
+                        <br>
+<!--                        <div sec:authorize="hasAuthority('ADMIN')">-->
+                            <button type="submit" class="btn btn-warning">Simpan</button>
+                            <a class="btn btn-primary" th:href="@{/}">Home</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

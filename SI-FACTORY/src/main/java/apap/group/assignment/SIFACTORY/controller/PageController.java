@@ -11,8 +11,10 @@ public class PageController {
     @RequestMapping("/")
     public String home(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String role = auth.getAuthorities().toString().toString().replace("[", "").replace("]","");
-        System.out.println("rolenya "+role);
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","")
+                .replace("ROLE_", "");
+//        System.out.println("rolenya "+role);
         model.addAttribute("role", role);
         return "home";
     }

@@ -61,8 +61,7 @@ public class PegawaiModel implements Serializable {
     @JsonIgnore
     private RoleModel role;
 
-    @NotNull
-    @Column(name="counter", nullable = false)
+    @Column(name="counter")
     private Integer counter;
 
     @OneToMany(mappedBy = "pegawai", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
