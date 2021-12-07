@@ -16,7 +16,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class MesinRestServiceImpl implements MesinRestService {
-    private final WebClient webClient;
 
     @Autowired
     private MesinDB mesinDB;
@@ -36,8 +35,5 @@ public class MesinRestServiceImpl implements MesinRestService {
         }
     }
 
-    public MesinRestServiceImpl(WebClient.Builder webClientBuilder){
-        this.webClient = webClientBuilder.baseUrl(Setting.mesinUrl).build();
-    }
 
 }
