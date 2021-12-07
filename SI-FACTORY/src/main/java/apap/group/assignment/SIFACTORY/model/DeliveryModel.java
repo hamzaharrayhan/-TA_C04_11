@@ -24,7 +24,7 @@ import java.util.List;
 public class DeliveryModel implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idDelivery;
+    private Long idDelivery;
 
     @NotNull
     @Column(nullable = false)
