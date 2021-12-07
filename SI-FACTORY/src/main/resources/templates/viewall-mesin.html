@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SI-FACTORY</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="dflex m-5 p-4 justify-content-center">
+    <h2 style="text-align:center;">Daftar Mesin</h2>
+    <br>
+    <div>
+        <div th:if="*{listMesin.size() != 0}">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama Mesin</th>
+                    <th>Kategori</th>
+                    <th>Tanggal Dibuat</th>
+                    <th>Kapasitas</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="mesin, iterationStatus: ${listMesin}"
+                    th:style="${iterationStatus.even} ? 'background-color: #f2f2f2;'">
+                    <td th:text="${mesin.idMesin}"></td>
+                    <td th:text="${mesin.nama}"></td>
+                    <td th:text="${mesin.idKategori}"></td>
+                    <td th:text="${mesin.tanggalDibuat}"></td>
+                    <td th:text="${mesin.kapasitas}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-primary" th:href="@{/}">Home</a>
+        </div>
+        <div th:unless="*{listMesin.size() != 0}">
+            <h2 th:text="'Belum ada mesin yang ditambahkan.'"></h2>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

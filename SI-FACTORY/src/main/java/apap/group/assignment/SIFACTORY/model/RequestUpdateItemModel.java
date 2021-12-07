@@ -27,7 +27,7 @@ import java.util.UUID;
 public class RequestUpdateItemModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRequestUpdateItem;
+    private Long idRequestUpdateItem;
 
     @Column(nullable = false)
     private String idItem;

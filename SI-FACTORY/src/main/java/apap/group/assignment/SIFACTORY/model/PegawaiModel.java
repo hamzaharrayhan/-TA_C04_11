@@ -28,7 +28,7 @@ import java.util.List;
 public class PegawaiModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPegawai;
+    private Long idPegawai;
 
     @NotNull
     @Size(max=50)

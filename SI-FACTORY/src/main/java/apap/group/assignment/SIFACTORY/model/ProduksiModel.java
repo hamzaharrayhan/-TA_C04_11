@@ -27,7 +27,7 @@ import java.util.UUID;
 public class ProduksiModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idProduksi;
+    private Long idProduksi;
 
     @NotNull
     @Column(nullable = false)
