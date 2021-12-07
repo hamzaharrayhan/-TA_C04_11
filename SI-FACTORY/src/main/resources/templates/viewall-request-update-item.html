@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title> SIFACTORY </title>
+    <object th:include="'fragments/'+${role} :: css" th:remove="tag"></object>
+    <object th:include="'fragments/'+${role} :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="'fragments/'+${role} :: navbar"></nav>
+<div class="container">
+    <h2>Daftar Request Update Item</h2>
+    <br>
+
+    <div th:if="${listRequestUpdateItem.size() != 0}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID Cabang</th>
+                <th>ID Item</th>
+                <th>ID Kategori</th>
+                <th>Tambahan Stok</th>
+                <th>Tanggal Request</th>
+                <th>ID Delivery</th>
+                <th>ID Produksi</th>
+                <th>Executed</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="requestUpdateItem : ${listRequestUpdateItem}">
+                <td th:text="${requestUpdateItem.idCabang}"></td>
+                <td th:text="${requestUpdateItem.idItem}"></td>
+                <td th:text="${requestUpdateItem.idKategori}"></td>
+                <td th:text="${requestUpdateItem.tambahanStok}"></td>
+                <td th:text="${requestUpdateItem.tanggalRequest}"></td>
+                <td th:text="${requestUpdateItem.delivery.idDelivery}"></td>
+                <td th:text="${requestUpdateItem.produksi.idProduksi}"></td>
+                <td th:text="${requestUpdateItem.executed}"></td>
+                <td th:if="${requestUpdateItem.executed == false}">
+                    <div sec:authorize="hasAuthority('STAFF_GUDANG')">
+                        <a class="mx-2 btn btn-warning" th:href="#">Update</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a class="mx-2 btn btn-warning" href="/">Home</a>
+    </div>
+</div>
+
+</body>
+
+</html>
+
