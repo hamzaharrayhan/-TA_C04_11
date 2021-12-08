@@ -1,16 +1,15 @@
 package apap.group.assignment.SIFACTORY.restcontroller;
 
+import apap.group.assignment.SIFACTORY.rest.ItemDetail;
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.service.ItemRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
@@ -21,15 +20,8 @@ public class ItemRestController {
     @Autowired
     private ItemRestService itemRestService;
 
-    @PostMapping(value = "/propose-item")
-    private ResponseEntity proposeItem(@Valid @RequestBody ItemModel item, BindingResult bindingResult){
-        if(bindingResult.hasFieldErrors()) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field"
-            );
-        }else{
-            itemRestService.proposeItem(item);
-            return ResponseEntity.ok("Propose item success");
-        }
+    @GetMapping(value = "/propose-item")
+    private Mono<String> proposeItem(@ModelAttribute ItemDetail item){
+        return itemRestService.proposeItem(item);
     }
 }
