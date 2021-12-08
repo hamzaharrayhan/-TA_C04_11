@@ -2,7 +2,7 @@ package apap.group.assignment.SIFACTORY.restcontroller;
 
 import apap.group.assignment.SIFACTORY.model.RequestUpdateItemModel;
 import apap.group.assignment.SIFACTORY.service.RequestUpdateItemRestService;
-import netscape.javascript.JSObject;
+//import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
