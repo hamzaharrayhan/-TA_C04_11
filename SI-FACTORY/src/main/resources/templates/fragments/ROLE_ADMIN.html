@@ -35,26 +35,10 @@
                     Home<span class="sr-only">(current)</span>
                 </a>
             </li>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-            <li th:class="${activePage == 'delivery'} ? 'font-weight-bold' : 'font-weight-regular'">
-                <a class="nav-item nav-link active text-secondary" th:href="@{/delivery/list-delivery}">
-                    List Delivery<span class="sr-only">(current)</span>
+            <li th:class="${activePage == 'home'} ? 'font-weight-bold' : 'font-weight-regular'">
+                <a class="nav-item nav-link active text-secondary" th:href="@{/}">
+                    Home<span class="sr-only">(current)</span>
                 </a>
-            </li>
->>>>>>> b811d8f96b86e9be4976c1f155c7a67387848efa
->>>>>>> 90194b611fb1642350d58c320bea4471930d2781
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown link
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" th:action="@{/}" method="GET">

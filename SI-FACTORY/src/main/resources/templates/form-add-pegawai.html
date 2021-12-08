@@ -46,8 +46,17 @@
                             <option th:each="role : ${listRole}" th:value="${role.idRole}" th:text="${role.namaRole}"></option>
                         </select>
                         <br>
+<<<<<<< HEAD
 <!--                        <div>-->
+=======
+<<<<<<< HEAD
+<!--                        <div>-->
+=======
+
+>>>>>>> b811d8f96b86e9be4976c1f155c7a67387848efa
+>>>>>>> 90194b611fb1642350d58c320bea4471930d2781
                         <div sec:authorize="hasAuthority('ADMIN')">
+<!--                        <div>-->
                             <button type="submit" class="btn btn-warning">Simpan</button>
                             <a class="btn btn-primary" th:href="@{/}">Home</a>
                         </div>

@@ -26,10 +26,25 @@ public class ItemController {
         String role = auth.getAuthorities().toString().toString().replace("[", "").replace("]", "");
         HashMap<String, List<ItemModel>> itemHashMap = itemRestService.retrieveListItem();
 
+<<<<<<< HEAD
+=======
+        System.out.println("map: " + itemHashMap);
+        System.out.println("role: " + role);
+
+        for (String name: itemHashMap.keySet()) {
+            String key = name.toString();
+            List value = itemHashMap.get(name);
+            System.out.println(key + " " + value.toString());
+        }
+
+>>>>>>> 90194b611fb1642350d58c320bea4471930d2781
         model.addAttribute("role", role);
         model.addAttribute("itemHashMap", itemHashMap);
 
         return "viewall-item";
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 90194b611fb1642350d58c320bea4471930d2781
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Home </title>
+    <object th:include="'fragments/fragment' :: css" th:remove="tag"></object>
+    <object th:include="'fragments/fragment' :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="'fragments/fragment' :: navbar"></nav>
+<div class="container-fluid">
+    <br>
+    <h1 style="text-align: center">Daftar Semua Item</h1>
+    <div class="card-body" >
+        <div class="justify-content-center" th:each="entri, stat: ${itemHashMap}">
+            <h3 th:text="'Daftar Item Dari Kategori ' + ${entri.key}"></h3>
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>No</th>
+<!--                    <th>ID Item</th>-->
+                    <th>Nama</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Kategori</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item, iterationStatus : ${entri.value}"
+                    th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                    <td th:text="${iterationStatus.count}"></td>
+<!--                    <td th:text="${item.uuid}"></td>-->
+                    <td th:text="${item.nama}"></td>
+                    <td th:text="${item.harga}"></td>
+                    <td th:text="${item.stok}"></td>
+                    <td th:text="${item.kategori}"></td>
+                    <td>
+                        <a class="btn btn-sm btn-dark" th:href="@{'#'}">Detail</a>
+                        <a sec:authorize="hasAuthority('STAFF_GUDANG')" class="btn btn-sm btn-warning" th:href="@{'#'}">Update</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="/">Home</a>
+    <br><br>
+</div>
+</body>
+</html>

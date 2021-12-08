@@ -44,6 +44,7 @@ public class RequestUpdateItemModel implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tanggalRequest;
 
+    @NotNull
     @Column(nullable = false)
     private Integer idCabang;
 
@@ -51,13 +52,13 @@ public class RequestUpdateItemModel implements Serializable {
     @Column(nullable = false)
     private Boolean executed;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_delivery", referencedColumnName = "idDelivery", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+//    @JoinColumn(name = "id_delivery", referencedColumnName = "idDelivery", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DeliveryModel delivery;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_produksi", referencedColumnName = "idProduksi", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+//    @JoinColumn(name = "id_produksi", referencedColumnName = "idProduksi", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ProduksiModel produksi;
 }

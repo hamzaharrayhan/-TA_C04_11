@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface ItemRestService {
     HashMap<String, List<ItemModel>> retrieveListItem();
+<<<<<<< HEAD
     ItemModel proposeItem(ItemModel item);
+=======
+>>>>>>> 90194b611fb1642350d58c320bea4471930d2781
 }
