@@ -7,9 +7,6 @@ import java.util.List;
 
 public interface DeliveryDB extends JpaRepository<DeliveryModel, Long> {
     DeliveryModel findByIdDelivery(Long id);
-<<<<<<< HEAD
-=======
     List<DeliveryModel> findAllByIdKurir(Long id);
 
->>>>>>> 90194b611fb1642350d58c320bea4471930d2781
 }
