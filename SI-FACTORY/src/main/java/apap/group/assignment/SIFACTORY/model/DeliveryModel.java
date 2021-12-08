@@ -28,7 +28,7 @@ public class DeliveryModel implements Serializable{
 
     @NotNull
     @Column(nullable = false)
-    private Integer idKurir;
+    private Long idKurir;
 
     @NotNull
     @Column(nullable = false)
