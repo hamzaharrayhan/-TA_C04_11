@@ -51,5 +51,22 @@ public class ItemRestServiceImpl implements ItemRestService {
         }
         return result;
     }
+
+    @Override
+    public ItemModel updateItem(String uuid, ItemModel itemUpdate) {
+//        ItemModel item =
+//        item.setNamaBioskop(bioskopUpdate.getNamaBioskop());
+//        item.setAlamatBioskop(bioskopUpdate.getAlamatBioskop());
+//        item.setJumlahStudio(bioskopUpdate.getJumlahStudio());
+
+        return this.webClient
+                .post()
+                .uri("/api/item/{uuid}")
+                .retrieve()
+                .bodyToMono(ItemModel.class)
+                .block();
+    }
+
+
 }
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <title>21 Cineplux</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Update Bioskop</h2>
+                <br>
+                <form th:action="@{/item/update" th:object="${item}" method="POST">
+
+                    <p th:text="'Nama Item : ' + ${item.nama}"></p>
+                    <p th:text="'Harga Item : ' + ${item.harga}"></p>
+                    <p th:text="'Stok Item : ' + ${item.stok}"></p>
+                    <p th:text="'Stok Item : ' + ${item.kategori}"></p>
+                    <input th:text="Jumlah Stok Ditambahkan : " type="number" name="jumlahStokDitambahkan">
+
+<!--                    bikin dropdown mesin-->
+
+                    <button class="btn btn-primary" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="/">Home</a>
+</div>
+
+</body>
+
+</html>

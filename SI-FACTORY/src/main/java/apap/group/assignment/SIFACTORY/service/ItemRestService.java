@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ItemRestService {
     HashMap<String, List<ItemModel>> retrieveListItem();
+    ItemModel updateItem(String uuid, ItemModel itemUpdate);
 }

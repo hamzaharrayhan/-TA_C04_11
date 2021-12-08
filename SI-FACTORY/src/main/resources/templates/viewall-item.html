@@ -40,7 +40,8 @@
                     <td th:text="${item.kategori}"></td>
                     <td>
                         <a class="btn btn-sm btn-dark" th:href="@{'#'}">Detail</a>
-                        <a sec:authorize="hasAuthority('STAFF_GUDANG')" class="btn btn-sm btn-warning" th:href="@{'#'}">Update</a>
+                        <a sec:authorize="hasAuthority('STAFF_GUDANG')" class="btn btn-sm btn-warning"
+                           th:href="@{/item/update/} + ${item.uuid}">Update</a>
                     </td>
                 </tr>
                 </tbody>
