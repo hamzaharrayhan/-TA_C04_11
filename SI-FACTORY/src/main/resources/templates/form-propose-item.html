@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<div class="container">
+<div class="container" sec:authorize="hasAuthority('FACTORY_MANAGER')">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card m-4 p-4">
@@ -18,41 +18,42 @@
           <h3 style="text-align: center">Form Propose Item</h3>
         </div>
         <div class="card-body">
-          <form th:action="@{/pegawai/add}" method="POST">
+          <form th:action="@{/api/v1/propose-item}" method="POST">
 
             <label>Nama Item</label>
-            <input type="text" name="namaItem" class="form-control" />
+            <input type="text" name="nama" class="form-control" />
 
             <br>
             <label>Harga Item</label>
-            <input type="text" name="hargaItem" class="form-control" />
+            <input type="number" name="harga" class="form-control" />
 
             <br>
             <label>Stok Item</label>
-            <input type="email" name="stokItem" class="form-control" />
+            <input type="number" name="stok" class="form-control" />
 
             <br>
             <label>Kategori Item</label>
-            <select name="kategoriItem" class="form-control">
+            <select name="kategori" class="form-control">
               <option selected value=""> -- Pilih Role -- </option>
-              <option>BUKU</option>
-              <option>DAPUR</option>
-              <option>MAKANAN & MINUMAN</option>
-              <option>ELEKTRONIK</option>
-              <option>FASHION</option>
-              <option>KECANTIKAN & PERAWATAN DIRI</option>
-              <option>FILM & MUSIK</option>
-              <option>GAMING</option>
-              <option>GADGET</option>
-              <option>KESEHATAN</option>
-              <option>RUMAH TANGGA</option>
-              <option>FURNITURE</option>
-              <option>ALAT & PERANGKAT KERAS</option>
-              <option>WEDDING</option>
+              <option th:each="kategori : ${listKategori}" th:value="${kategori.idKategori}" th:text="${kategori.nama}"></option>
+<!--              <option>BUKU</option>-->
+<!--              <option>DAPUR</option>-->
+<!--              <option>MAKANAN & MINUMAN</option>-->
+<!--              <option>ELEKTRONIK</option>-->
+<!--              <option>FASHION</option>-->
+<!--              <option>KECANTIKAN & PERAWATAN DIRI</option>-->
+<!--              <option>FILM & MUSIK</option>-->
+<!--              <option>GAMING</option>-->
+<!--              <option>GADGET</option>-->
+<!--              <option>KESEHATAN</option>-->
+<!--              <option>RUMAH TANGGA</option>-->
+<!--              <option>FURNITURE</option>-->
+<!--              <option>ALAT & PERANGKAT KERAS</option>-->
+<!--              <option>WEDDING</option>-->
             </select>
             <br>
             <!--                        <div>-->
-            <div sec:authorize="hasAuthority('FACTORY_MANAGER')">
+            <div>
               <button type="submit" class="btn btn-warning">Submit</button>
               <a class="btn btn-primary" th:href="@{/}">Home</a>
             </div>
