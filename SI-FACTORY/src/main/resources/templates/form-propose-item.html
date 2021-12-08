@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+  <meta charset="UTF-8">
+  <title> Propose Item </title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card m-4 p-4">
+        <div class="card-header">
+          <h3 style="text-align: center">Form Propose Item</h3>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/pegawai/add}" method="POST">
+
+            <label>Nama Item</label>
+            <input type="text" name="namaItem" class="form-control" />
+
+            <br>
+            <label>Harga Item</label>
+            <input type="text" name="hargaItem" class="form-control" />
+
+            <br>
+            <label>Stok Item</label>
+            <input type="email" name="stokItem" class="form-control" />
+
+            <br>
+            <label>Kategori Item</label>
+            <select name="kategoriItem" class="form-control">
+              <option selected value=""> -- Pilih Role -- </option>
+              <option>BUKU</option>
+              <option>DAPUR</option>
+              <option>MAKANAN & MINUMAN</option>
+              <option>ELEKTRONIK</option>
+              <option>FASHION</option>
+              <option>KECANTIKAN & PERAWATAN DIRI</option>
+              <option>FILM & MUSIK</option>
+              <option>GAMING</option>
+              <option>GADGET</option>
+              <option>KESEHATAN</option>
+              <option>RUMAH TANGGA</option>
+              <option>FURNITURE</option>
+              <option>ALAT & PERANGKAT KERAS</option>
+              <option>WEDDING</option>
+            </select>
+            <br>
+            <!--                        <div>-->
+            <div sec:authorize="hasAuthority('FACTORY_MANAGER')">
+              <button type="submit" class="btn btn-warning">Submit</button>
+              <a class="btn btn-primary" th:href="@{/}">Home</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

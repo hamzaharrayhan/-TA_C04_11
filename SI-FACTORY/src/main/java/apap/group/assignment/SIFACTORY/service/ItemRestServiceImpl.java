@@ -2,6 +2,10 @@ package apap.group.assignment.SIFACTORY.service;
 
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.rest.Setting;
+<<<<<<< HEAD
+import org.springframework.beans.factory.annotation.Autowired;
+=======
+>>>>>>> 90194b611fb1642350d58c320bea4471930d2781
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -52,4 +56,3 @@ public class ItemRestServiceImpl implements ItemRestService {
         return result;
     }
 }
-
