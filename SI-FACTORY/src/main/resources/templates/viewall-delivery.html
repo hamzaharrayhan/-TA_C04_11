@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title> Bioskop </title>
+    <title> List of Delivery </title>
     <object th:include="'fragments/'+${role} :: css" th:remove="tag"></object>
     <object th:include="'fragments/'+${role} :: js" th:remove="tag"></object>
 </head>
@@ -23,6 +23,9 @@
             <th scope="col">Tanggal Dikirim</th>
             <th scope="col">Sent</th>
             <th scope="col">Id Request Update Item</th>
+            <div th:if="${role == 'STAFF_KURIR'}">
+                <th scope="col">Action</th>
+            </div>
         </tr>
         </thead>
         <tbody>
@@ -35,6 +38,9 @@
             <td th:text="${delivery.tanggalDikirim}"></td>
             <td th:text="${delivery.sent}"></td>
             <td th:text="${delivery.requestUpdateItem.idRequestUpdateItem}"></td>
+            <div th:if="${role == 'STAFF_KURIR'}">
+                <td><a th:if="${delivery.sent == false}" class="btn btn-primary" th:href="@{/delivery/kirim/}+${delivery.idDelivery}">Kirim</a></td>
+            </div>
         </tr>
         </tbody>
     </table>
