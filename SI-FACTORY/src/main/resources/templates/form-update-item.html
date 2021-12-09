@@ -15,18 +15,34 @@
             <div class="justify-content-center">
                 <h2>Update Bioskop</h2>
                 <br>
-                <form th:action="@{/item/update" th:object="${item}" method="POST">
+                <form th:action="@{/item/update}" th:object="${item}" method="POST">
+                    <input type="hidden" th:field="*{uuid}" name="uuid">
 
-                    <p th:text="'Nama Item : ' + ${item.nama}"></p>
-                    <p th:text="'Harga Item : ' + ${item.harga}"></p>
-                    <p th:text="'Stok Item : ' + ${item.stok}"></p>
-                    <p th:text="'Stok Item : ' + ${item.kategori}"></p>
-                    <input th:text="Jumlah Stok Ditambahkan : " type="number" name="jumlahStokDitambahkan">
+                    Nama Item : <input
+                        th:text="${item.nama}" type="hidden" name="nama" id="nama" th:field="*{nama}" th:value="*{nama}"><br>
 
-<!--                    bikin dropdown mesin-->
+                    Harga Item : <input
+                        th:text="${item.harga}" type="hidden" name="harga" id="harga" th:field="*{harga}" th:value="*{harga}"><br>
 
-                    <button class="btn btn-primary" type="submit">Update</button>
-                </form>
+                    Stok Item : <input
+                        th:text="${item.stok}" type="hidden" name="stok" id="stok" th:field="*{stok}" th:value="*{stok}"><br>
+
+                    Kategori Item: <input
+                        th:text="${item.kategori}" type="hidden" name="kategori" id="kategori" th:field="*{kategori}" th:value="*{kategori}"><br>
+
+                    Jumlah Stok Ditambahkan : <input
+                        type="number" name="jumlahStokDitambahkan" id="jumlahStokDitambahkan"><br><br>
+
+                    Mesin :
+                    <select name="mesin">
+                        <option selected value=""> -- Pilih Mesin -- </option>
+                        <option th:each="mesin : ${listMesin}" th:value="${mesin.idMesin}" th:text="${mesin.nama}"></option>
+                    </select>
+                    <br><br>
+
+                    <button class="btn btn-warning" type="submit">Update</button>
+                </form><br>
+                <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>
             </div>
         </div>
     </div>

@@ -2,12 +2,14 @@ package apap.group.assignment.SIFACTORY.service;
 
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.rest.Setting;
-<<<<<<< HEAD
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-=======
->>>>>>> 90194b611fb1642350d58c320bea4471930d2781
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -18,6 +20,9 @@ import java.util.List;
 @Transactional
 public class ItemRestServiceImpl implements ItemRestService {
     private final WebClient webClient;
+
+    @Autowired
+    private ItemRestService itemRestService;
 
     public ItemRestServiceImpl(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl(Setting.itemUrl).build();
@@ -57,19 +62,44 @@ public class ItemRestServiceImpl implements ItemRestService {
     }
 
     @Override
-    public ItemModel updateItem(String uuid, ItemModel itemUpdate) {
-//        ItemModel item =
-//        item.setNamaBioskop(bioskopUpdate.getNamaBioskop());
-//        item.setAlamatBioskop(bioskopUpdate.getAlamatBioskop());
-//        item.setJumlahStudio(bioskopUpdate.getJumlahStudio());
-
-        return this.webClient
-                .post()
-                .uri("/api/item/{uuid}")
+    public ItemModel getItemByUuid(String uuid) {
+        HashMap<String, Object> response = this.webClient
+                .get()
+                .uri("/api/item/"+uuid)
                 .retrieve()
-                .bodyToMono(ItemModel.class)
+                .bodyToMono(HashMap.class)
                 .block();
+        HashMap result = (HashMap) response.get("result");
+        ItemModel item = new ItemModel();
+
+        item.setUuid((String)result.get("uuid"));
+        item.setNama((String)result.get("nama"));
+        item.setHarga((Integer)result.get("harga"));
+        item.setStok((Integer)result.get("stok"));
+        item.setKategori((String)result.get("kategori"));
+
+        return item;
     }
 
+    @Override
+    public ItemModel updateItem(ItemModel item, Integer jumlahStokDitambahkan) throws JsonProcessingException {
+//        ItemModel item = new ItemModel();
+        item.setStok(item.getStok()+jumlahStokDitambahkan);
+        putItem(item);
 
+        return item;
+    }
+
+    @Override
+    public Mono<String> putItem(ItemModel item) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(item);
+        return this.webClient
+                .put()
+                .uri("/api/item/"+item.getUuid())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(Mono.just(json),String.class)
+                .retrieve()
+                .bodyToMono(String.class);
+    }
 }
