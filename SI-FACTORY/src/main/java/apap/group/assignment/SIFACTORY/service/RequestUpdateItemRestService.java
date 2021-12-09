@@ -11,5 +11,5 @@ import reactor.core.publisher.Mono;
 public interface RequestUpdateItemRestService {
     RequestUpdateItemModel addRequestUpdateItem(RequestUpdateItemModel item);
     RequestUpdateItemModel getRequestUpdateItemByIdRequestUpdateItem(Long idRequestUpdateItem);
-    Mono<ItemDetail> updateItem(String uuid, Integer stok, Long idRequestUpdateItem, PegawaiModel staf, Integer mesin);
+    Mono<ItemDetail> updateItem(String uuid, Integer stok, Long idRequestUpdateItem, PegawaiModel staf, Integer mesin, Integer kategori);
 }

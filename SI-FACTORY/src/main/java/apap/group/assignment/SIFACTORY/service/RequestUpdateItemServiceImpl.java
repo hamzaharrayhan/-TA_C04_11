@@ -12,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +36,24 @@ public class RequestUpdateItemServiceImpl implements RequestUpdateItemService{
     }
 
     @Override
-    public void updateRequestUpdateItem(Long idRequestUpdateItem, PegawaiModel staf, Integer mesin) {
+    public void updateRequestUpdateItem(Long idRequestUpdateItem, PegawaiModel staf, Integer mesin, String uuid, Integer stok, Integer kategori) {
         ProduksiModel produksi = new ProduksiModel();
-        produksi.getRequestUpdateItem().setIdRequestUpdateItem(idRequestUpdateItem);
-        produksi.getPegawai().setIdPegawai(staf.getIdPegawai());
-        produksi.getMesin().setIdMesin(Long.valueOf(mesin));
+//        LocalDate time = LocalDate.now();
+        System.out.println(uuid);
+        System.out.println(stok);
+        System.out.println(kategori);
+        java.util.Date date = new java.util.Date();
+        produksi.setRequestUpdateItem(getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem));
+        produksi.setPegawai(staf);
+        produksi.setIdItem(uuid);
+        produksi.setIdKategori(kategori);
+        produksi.setTambahanStok(stok);
+        produksi.setTanggalProduksi(date);
+//        produksi.getRequestUpdateItem().setIdRequestUpdateItem(idRequestUpdateItem);
+//        produksi.getPegawai().setIdPegawai(staf.getIdPegawai());
+//        produksi.getMesin().setIdMesin(Long.valueOf(mesin));
         MesinModel mesinSelected = mesinService.getMesinByIdMesin(Long.valueOf(mesin));
+        produksi.setMesin(mesinSelected);
         mesinSelected.setKapasitas(mesinSelected.getKapasitas() - 1);
         produksiDB.save(produksi);
     }
@@ -52,4 +66,5 @@ public class RequestUpdateItemServiceImpl implements RequestUpdateItemService{
         }
         return null;
     }
+
 }

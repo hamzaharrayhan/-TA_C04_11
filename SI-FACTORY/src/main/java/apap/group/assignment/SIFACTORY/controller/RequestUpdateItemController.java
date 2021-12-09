@@ -61,18 +61,23 @@ public class RequestUpdateItemController {
         List<MesinModel> listMesin = mesinService.getMesinList();
         List<MesinModel> listMesinByKategori = new ArrayList<>();
         RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
+        System.out.println(reqUpdateItem.getIdKategori());
         ItemModel item = itemRestService.getItemByUuid(reqUpdateItem.getIdItem());
         // filter mesin berdasarkan kategori
         for (MesinModel mesin: listMesin) {
             if (mesin.getIdKategori() == reqUpdateItem.getIdKategori() && mesin.getKapasitas() > 0) {
                 listMesinByKategori.add(mesin);
+                System.out.println(mesin.getNama());
             }
         }
-        for (MesinModel m: listMesinByKategori) {
-            System.out.println(m.getNama());
-        }
+//        for (MesinModel m: listMesinByKategori) {
+//            System.out.println(m.getNama());
+//        }
 //        RequestUpdateItemModel reqUpdateItem = requestUpdateItemRestService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
         model.addAttribute("stokTambahan", reqUpdateItem.getTambahanStok());
+        model.addAttribute("kategori", reqUpdateItem.getIdKategori());
+        model.addAttribute("idRequestUpdateItem", reqUpdateItem.getIdRequestUpdateItem());
+        model.addAttribute("uuid", item.getUuid());
         model.addAttribute("item", item);
         model.addAttribute("listMesin", listMesinByKategori);
         return "form-update-reqUpdateItem";
@@ -80,25 +85,29 @@ public class RequestUpdateItemController {
 
     @PostMapping("/item/update-request")
     public String updateItemSubmit(
-            @ModelAttribute RequestUpdateItemModel requestUpdateItem,
+            @ModelAttribute ItemModel item,
+            String uuid,
             String username,
             Integer mesin,
+            Integer stokTambahan,
+            Integer kategori,
+            Long idRequestUpdateItem,
             Model model
     ) {
-        // update stok di API & service biasa
-        String uuid = requestUpdateItem.getIdItem();
-        Integer stok = requestUpdateItem.getTambahanStok();
-        Long idRequestUpdateItem = requestUpdateItem.getIdRequestUpdateItem();
         PegawaiModel staf = pegawaiService.getPegawaiByUsername(username);
-        requestUpdateItemRestService.updateItem(uuid, stok, idRequestUpdateItem, staf, mesin);
+//        System.out.println("iditem = " + uuid);
+//        System.out.println("stok = " + stokTambahan);
+//        System.out.println("kategori = " + kategori);
+        // do update
+        requestUpdateItemRestService.updateItem(uuid, stokTambahan, idRequestUpdateItem, staf, mesin, kategori);
 
         // set executed == TRUE
-        requestUpdateItem.setExecuted(true);
+        requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem).setExecuted(true);
 
         // add counter pegawai
         pegawaiService.addCounter(staf);
 
-//        model.addAttribute("noBioskop", bioskop.getNoBioskop());
-        return "update-bioskop";
+        model.addAttribute("uuid", uuid);
+        return "update-req-update-item";
     }
 }

@@ -49,10 +49,10 @@ public class RequestUpdateItemRestServiceImpl implements RequestUpdateItemRestSe
     }
 
     @Override
-    public Mono<ItemDetail> updateItem(String uuid, Integer stok, Long idRequestUpdateItem, PegawaiModel staf, Integer mesin) {
+    public Mono<ItemDetail> updateItem(String uuid, Integer stok, Long idRequestUpdateItem, PegawaiModel staf, Integer mesin, Integer kategori) {
         MultiValueMap<String, Integer> data = new LinkedMultiValueMap<>();
         data.add("stok", stok);
-        requestUpdateItemService.updateRequestUpdateItem(idRequestUpdateItem, staf, mesin);
+        requestUpdateItemService.updateRequestUpdateItem(idRequestUpdateItem, staf, mesin, uuid, stok, kategori);
         return this.webClientItem.put().uri("/api/item" + uuid).retrieve().bodyToMono(ItemDetail.class);
     }
 
