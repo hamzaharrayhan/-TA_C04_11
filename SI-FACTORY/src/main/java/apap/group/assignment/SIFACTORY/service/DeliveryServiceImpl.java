@@ -35,11 +35,9 @@ public class DeliveryServiceImpl implements DeliveryService{
     public Map<Long,String> alamatCabang(){
         JsonNode jsonNode = this.webClient.get().uri("/api/cabang/list-alamat-cabang").retrieve().bodyToMono(JsonNode.class).block();
         Map<Long, String> listAlamat = new HashMap<>();
-        System.out.println(jsonNode);
         for (JsonNode j : jsonNode){
             listAlamat.put(j.get("id").asLong(),j.get("alamat").asText());
         }
-        System.out.println(listAlamat);
         return listAlamat;
     }
 

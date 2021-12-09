@@ -55,20 +55,29 @@ public class DeliveryController {
         PegawaiModel kurir = pegawaiService.getPegawaiByUsername(auth.getName());
         DeliveryModel delivery = deliveryDB.findByIdDelivery(idDelivery);
         model.addAttribute("role", role);
-        Map<Long,String> alamat = deliveryService.alamatCabang();
         java.util.Date date = new java.util.Date();
 
-        if (!alamat.get(delivery.getIdCabang()).isEmpty()){
-            String message = "Pengiriman ke alamat " + alamat.get(delivery.getIdCabang()) + " berhasil!";
+        try {
+            Map<Long,String> alamat = deliveryService.alamatCabang();
+            System.out.println(alamat);
+
+            if (!alamat.get(delivery.getIdCabang()).isEmpty()){
+                String message = "Pengiriman ke alamat " + alamat.get(delivery.getIdCabang()) + " berhasil!";
+                model.addAttribute("message", message);
+                pegawaiService.addCounter(kurir);
+                delivery.setTanggalDikirim(date);
+                delivery.setSent(true);
+                deliveryDB.save(delivery);
+                return "status-pengiriman";
+            } else {
+                String message = "Alamat untuk cabang tersebut tidak ditemukan. Pengiriman gagal!";
+                model.addAttribute("message", message);
+                return "status-pengiriman";
+            }
+        } catch (NullPointerException e){
+            String message = "Alamat untuk cabang tersebut tidak ditemukan. Pengiriman gagal!";
             model.addAttribute("message", message);
-            pegawaiService.addCounter(kurir);
-            delivery.setTanggalDikirim(date);
-            delivery.setSent(true);
-            deliveryDB.save(delivery);
             return "status-pengiriman";
         }
-        String message = "Alamat untuk cabang tersebut tidak ditemukan. Pengiriman gagal!";
-        model.addAttribute("message", message);
-        return "status-pengiriman";
     }
 }
