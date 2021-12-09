@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/api/v1/**").permitAll()
-//                .antMatchers("/pegawai/add").hasAuthority("ADMIN")
+                .antMatchers("/pegawai/add").hasAuthority("ADMIN")
                 .antMatchers("/request-update-item/viewall").hasAnyAuthority("STAFF_GUDANG", "STAFF_OPERASIONAL")
                 .antMatchers("/item/propose-item").hasAuthority("FACTORY_MANAGER")
                 .anyRequest().authenticated()

@@ -41,7 +41,7 @@
                 <td th:text="${requestUpdateItem.executed}"></td>
                 <td th:if="${requestUpdateItem.executed == false}">
                     <div sec:authorize="hasAuthority('STAFF_GUDANG')">
-                        <a class="mx-2 btn btn-warning" th:href="@{/}">Update</a>
+                        <a class="mx-2 btn btn-warning" th:href="#">Update</a>
                     </div>
                 </td>
             </tr>
