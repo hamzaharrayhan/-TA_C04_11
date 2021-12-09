@@ -1,5 +1,6 @@
 package apap.group.assignment.SIFACTORY.service;
 
+import apap.group.assignment.SIFACTORY.rest.ItemDetail;
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import reactor.core.publisher.Mono;
@@ -12,4 +13,5 @@ public interface ItemRestService {
     ItemModel updateItem(ItemModel item, Integer jumlahStokDitambahkan) throws JsonProcessingException;
     ItemModel getItemByUuid(String uuid);
     Mono<String> putItem(ItemModel item) throws JsonProcessingException;
+    Mono<String> proposeItem(ItemDetail item);
 }

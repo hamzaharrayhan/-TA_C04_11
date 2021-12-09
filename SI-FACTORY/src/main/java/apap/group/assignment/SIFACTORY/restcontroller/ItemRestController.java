@@ -1,14 +1,18 @@
 package apap.group.assignment.SIFACTORY.restcontroller;
 
 import apap.group.assignment.SIFACTORY.model.MesinModel;
+import apap.group.assignment.SIFACTORY.rest.ItemDetail;
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.service.ItemRestService;
 import apap.group.assignment.SIFACTORY.service.MesinRestService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -22,18 +26,11 @@ public class ItemRestController {
 
     @Autowired
     private MesinRestService mesinRestService;
-//
-//    @PostMapping(value = "/propose-item")
-//    private ResponseEntity proposeItem(@Valid @RequestBody ItemModel item, BindingResult bindingResult){
-//        if(bindingResult.hasFieldErrors()) {
-//            throw new ResponseStatusException(
-//                    HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field"
-//            );
-//        }else{
-//            itemRestService.proposeItem(item);
-//            return ResponseEntity.ok("Propose item success");
-//        }
-//    }
+
+    @GetMapping(value = "/propose-item")
+    private Mono<String> proposeItem(@ModelAttribute ItemDetail item){
+        return itemRestService.proposeItem(item);
+    }
 
     @PutMapping(value = "/update/{uuid}")
     private ItemModel updateItem (@PathVariable("uuid") String uuid,
