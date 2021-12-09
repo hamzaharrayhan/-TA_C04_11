@@ -75,4 +75,24 @@ public class ItemRestServiceImpl implements ItemRestService {
         }
         return result;
     }
+
+    @Override
+    public ItemModel getItemByUuid(String uuid) {
+        HashMap<String, Object> response = this.webClient
+                .get()
+                .uri("/api/item/"+uuid)
+                .retrieve()
+                .bodyToMono(HashMap.class)
+                .block();
+        HashMap result = (HashMap) response.get("result");
+        ItemModel item = new ItemModel();
+
+        item.setUuid((String)result.get("uuid"));
+        item.setNama((String)result.get("nama"));
+        item.setHarga((Integer)result.get("harga"));
+        item.setStok((Integer)result.get("stok"));
+        item.setKategori((String)result.get("kategori"));
+
+        return item;
+    }
 }

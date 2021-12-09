@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <title>SI-FACTORY</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Update Item</h2>
+                <br>
+                <form th:action="@{/item/update-request}" th:object="${item}" method="POST">
+
+                    <p th:text="'Nama Item : ' + ${item.nama}"></p>
+                    <p th:text="'Harga Item : ' + ${item.harga}"></p>
+                    <p th:text="'Stok Item : ' + ${item.stok}"></p>
+                    <p th:text="'Kategori Item : ' + ${item.kategori}"></p>
+                    Jumlah Stok Ditambahkan :  <input th:value="*{stokTambahan}" type="number" name="stokTambahan" disabled="disabled"><br><br>
+
+                    Mesin :
+                    <select name="mesin">
+                        <option selected value=""> -- Pilih Mesin -- </option>
+                        <option th:each="mesin : ${listMesin}" th:value="${mesin.idMesin}" th:text="${mesin.nama}"></option>
+                    </select>
+                    <br><br>
+
+<!--                    <button class="btn btn-primary" th:href="@{/item/viewall}">Back</button>-->
+                    <button class="btn btn-warning" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" th:href="@{/}">Home</a>
+</div>
+
+</body>
+
+</html>

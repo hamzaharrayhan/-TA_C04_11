@@ -10,4 +10,5 @@ import java.util.List;
 public interface ItemRestService {
     HashMap<String, List<ItemModel>> retrieveListItem();
     Mono<String> proposeItem(ItemDetail item);
+    ItemModel getItemByUuid(String uuid);
 }
