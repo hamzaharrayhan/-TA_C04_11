@@ -18,44 +18,45 @@
           <h3 style="text-align: center">Form Propose Item</h3>
         </div>
         <div class="card-body">
-          <form th:action="@{/api/v1/propose-item}" method="POST">
-
+          <form th:action="@{/item/propose-item}" method="POST">
+            <input type="hidden" name="username" th:value="${#httpServletRequest.userPrincipal.name}">
             <label>Nama Item</label>
-            <input type="text" name="nama" class="form-control" />
+            <input type="text" name="name" class="form-control" />
 
             <br>
             <label>Harga Item</label>
-            <input type="number" name="harga" class="form-control" />
+            <input type="number" name="price" class="form-control" />
 
             <br>
             <label>Stok Item</label>
-            <input type="number" name="stok" class="form-control" />
+            <input type="number" name="stock" class="form-control" />
 
             <br>
             <label>Kategori Item</label>
-            <select name="kategori" class="form-control">
-              <option selected value=""> -- Pilih Role -- </option>
-              <option th:each="kategori : ${listKategori}" th:value="${kategori.idKategori}" th:text="${kategori.nama}"></option>
-<!--              <option>BUKU</option>-->
-<!--              <option>DAPUR</option>-->
-<!--              <option>MAKANAN & MINUMAN</option>-->
-<!--              <option>ELEKTRONIK</option>-->
-<!--              <option>FASHION</option>-->
-<!--              <option>KECANTIKAN & PERAWATAN DIRI</option>-->
-<!--              <option>FILM & MUSIK</option>-->
-<!--              <option>GAMING</option>-->
-<!--              <option>GADGET</option>-->
-<!--              <option>KESEHATAN</option>-->
-<!--              <option>RUMAH TANGGA</option>-->
-<!--              <option>FURNITURE</option>-->
-<!--              <option>ALAT & PERANGKAT KERAS</option>-->
-<!--              <option>WEDDING</option>-->
+            <select name="category" class="form-control">
+              <option selected value=""> -- Pilih Kategori -- </option>
+<!--              <option th:each="idKategori : ${listidKategori}" th:value="${idKategori.ididKategori}" th:text="${idKategori.nama}"></option>-->
+              <div th:each="idKategori : ${listKategori}">
+              <option th:if="${idKategori} == 1" th:value="${idKategori}">BUKU</option>
+              <option th:if="${idKategori} == 2" th:value="${idKategori}">DAPUR</option>
+              <option th:if="${idKategori} == 3" th:value="${idKategori}">MAKANAN & MINUMAN</option>
+              <option th:if="${idKategori} == 4" th:value="${idKategori}">ELEKTRONIK</option>
+              <option th:if="${idKategori} == 5" th:value="${idKategori}">FASHION</option>
+              <option th:if="${idKategori} == 6" th:value="${idKategori}">KECANTIKAN & PERAWATAN DIRI</option>
+              <option th:if="${kategor} == 7" th:value="${idKategori}">FILM & MUSIK</option>
+              <option th:if="${idKategori} == 8" th:value="${idKategori}">GAMING</option>
+              <option th:if="${idKategori} == 9" th:value="${idKategori}">GADGET</option>
+              <option th:if="${idKategori} == 10" th:value="${idKategori}">KESEHATAN</option>
+              <option th:if="${idKategori} == 11" th:value="${idKategori}">RUMAH TANGGA</option>
+              <option th:if="${idKategori} == 12" th:value="${idKategori}">FURNITURE</option>
+              <option th:if="${idKategori} == 13" th:value="${idKategori}">ALAT & PERANGKAT KERAS</option>
+              <option th:if="${idKategori} == 14" th:value="${idKategori}">WEDDING</option>
+              </div>
             </select>
             <br>
-            <!--                        <div>-->
             <div>
               <button type="submit" class="btn btn-warning">Submit</button>
-              <a class="btn btn-primary" th:href="@{/}">Home</a>
+              <a class="btn btn-warning" th:href="@{/}">Home</a>
             </div>
           </form>
         </div>

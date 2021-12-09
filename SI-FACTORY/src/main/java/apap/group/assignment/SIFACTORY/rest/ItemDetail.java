@@ -11,15 +11,15 @@ import java.util.Date;
 public class ItemDetail {
 //    private String status;
 
-    @JsonProperty("harga")
-    private Integer harga;
+    @JsonProperty("price")
+    private Integer price;
 
-    @JsonProperty("kategori")
-    private Integer kategori;
+    @JsonProperty("category")
+    private Integer category;
 
-    @JsonProperty("nama")
-    private String nama;
+    @JsonProperty("name")
+    private String name;
 
-    @JsonProperty("stok")
-    private Integer stok;
+    @JsonProperty("stock")
+    private Integer stock;
 }
