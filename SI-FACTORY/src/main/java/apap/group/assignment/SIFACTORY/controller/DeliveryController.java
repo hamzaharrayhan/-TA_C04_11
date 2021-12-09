@@ -12,9 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/delivery")
@@ -43,5 +46,29 @@ public class DeliveryController {
         }
         model.addAttribute("listDelivery", listDeliveryOp);
         return "viewall-delivery";
+    }
+
+    @GetMapping(value = "/kirim/{id}")
+    public String listAlamatDelivery(Model model, @PathVariable("id") Long idDelivery) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().replace("[", "").replace("]", "");
+        PegawaiModel kurir = pegawaiService.getPegawaiByUsername(auth.getName());
+        DeliveryModel delivery = deliveryDB.findByIdDelivery(idDelivery);
+        model.addAttribute("role", role);
+        Map<Long,String> alamat = deliveryService.alamatCabang();
+        java.util.Date date = new java.util.Date();
+
+        if (!alamat.get(delivery.getIdCabang()).isEmpty()){
+            String message = "Pengiriman ke alamat " + alamat.get(delivery.getIdCabang()) + " berhasil!";
+            model.addAttribute("message", message);
+            pegawaiService.addCounter(kurir);
+            delivery.setTanggalDikirim(date);
+            delivery.setSent(true);
+            deliveryDB.save(delivery);
+            return "status-pengiriman";
+        }
+        String message = "Alamat untuk cabang tersebut tidak ditemukan. Pengiriman gagal!";
+        model.addAttribute("message", message);
+        return "status-pengiriman";
     }
 }

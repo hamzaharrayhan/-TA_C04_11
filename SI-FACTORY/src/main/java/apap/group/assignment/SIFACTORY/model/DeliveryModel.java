@@ -32,15 +32,14 @@ public class DeliveryModel implements Serializable{
 
     @NotNull
     @Column(nullable = false)
-    private Integer idCabang;
+    private Long idCabang;
 
     @NotNull
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tanggalDibuat;
 
-    @NotNull
-    @Column(nullable = false)
+    @Column(nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tanggalDikirim;
 
