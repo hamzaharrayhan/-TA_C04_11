@@ -2,11 +2,8 @@ package apap.group.assignment.SIFACTORY.service;
 
 import apap.group.assignment.SIFACTORY.model.MesinModel;
 import apap.group.assignment.SIFACTORY.repository.MesinDB;
-import apap.group.assignment.SIFACTORY.rest.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -35,5 +32,9 @@ public class MesinRestServiceImpl implements MesinRestService {
         }
     }
 
-
+    @Override
+    public List<MesinModel> getMesinByIdKategori(Integer idKategori) {
+        List<MesinModel> listMesin = mesinDB.findByIdKategori(idKategori);
+        return listMesin;
+    }
 }

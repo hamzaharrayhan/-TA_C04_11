@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/item/propose-item").hasAuthority("FACTORY_MANAGER")
                 .antMatchers("/delivery/list-delivery").hasAnyAuthority("STAFF_KURIR", "STAFF_OPERASIONAL")
                 .antMatchers("/delivery/kirim/**").hasAuthority("STAFF_KURIR")
+                .antMatchers("/item/update/**").hasAuthority("STAFF_GUDANG")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
