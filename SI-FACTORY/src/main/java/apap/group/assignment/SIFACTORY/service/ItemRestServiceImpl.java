@@ -3,13 +3,13 @@ package apap.group.assignment.SIFACTORY.service;
 import apap.group.assignment.SIFACTORY.model.MesinModel;
 import apap.group.assignment.SIFACTORY.model.PegawaiModel;
 import apap.group.assignment.SIFACTORY.model.ProduksiModel;
+import apap.group.assignment.SIFACTORY.repository.ProduksiDB;
 import apap.group.assignment.SIFACTORY.rest.ItemDetail;
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.rest.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -36,6 +36,9 @@ public class ItemRestServiceImpl implements ItemRestService {
 
     @Autowired
     private PegawaiService pegawaiService;
+
+    @Autowired
+    private ProduksiDB produksiDB;
 
     public ItemRestServiceImpl(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl(Setting.itemUrl).build();
@@ -122,30 +125,31 @@ public class ItemRestServiceImpl implements ItemRestService {
         item.setStok(item.getStok() + jumlahStokDitambahkan);
         putItem(item);
 
-//        updateAfterSubmit(item, jumlahStokDitambahkan, pegawai, mesin);
+        updateAfterSubmit(item, jumlahStokDitambahkan, pegawai, mesin);
 
         return item;
     }
 
     public void updateAfterSubmit(ItemModel item, Integer jumlahStokDitambahkan, PegawaiModel pegawai, MesinModel mesin) {
-        if (putItem(item).equals(ResponseEntity.ok())) {
-            ProduksiModel produksi = new ProduksiModel();
-            Date tanggal = new Date();
+        ProduksiModel produksi = new ProduksiModel();
+        Date tanggal = new Date();
 
-            // set produksi
-            produksi.setIdItem(item.getUuid());
-            produksi.setIdKategori(itemRestService.getIdKategoriByKategori(item.getKategori()));
-            produksi.setTambahanStok(jumlahStokDitambahkan);
-            produksi.setTanggalProduksi(tanggal);
-            produksi.setPegawai(pegawai);
-            produksi.setRequestUpdateItem(null);
+        // set produksi
+        produksi.setIdItem(item.getUuid());
+        produksi.setIdKategori(itemRestService.getIdKategoriByKategori(item.getKategori()));
+        produksi.setTambahanStok(jumlahStokDitambahkan);
+        produksi.setTanggalProduksi(tanggal);
+        produksi.setPegawai(pegawai);
+        produksi.setMesin(mesin);
+        produksi.setRequestUpdateItem(null);
+        produksiDB.save(produksi);
 
-            // mengurangi kapasitas mesin
-            mesin.setKapasitas(mesin.getKapasitas()-1);
+        // mengurangi kapasitas mesin
+        mesin.setKapasitas(mesin.getKapasitas()-1);
 
-            // menambahkan add counter pada pegawai
-            pegawaiService.addCounter(pegawai);
-        }
+        // menambahkan add counter pada pegawai
+        pegawaiService.addCounter(pegawai);
+
     }
 
     @Override

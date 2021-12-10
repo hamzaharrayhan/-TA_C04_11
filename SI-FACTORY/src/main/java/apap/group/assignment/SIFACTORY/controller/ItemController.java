@@ -122,12 +122,6 @@ public class ItemController {
                                   @RequestBody ItemModel item,
                                   Model model){
         try{
-            String kategori = itemRestService.getItemByUuid(uuid).getKategori();
-            List<MesinModel> listMesin = mesinRestService.getListMesinByKategori(item);
-
-            model.addAttribute("item", item);
-            model.addAttribute("listMesin", listMesin);
-
             return itemRestService.updateItem(item, jumlahStokDitambahkan, mesin);
 
         } catch (NoSuchElementException e){
