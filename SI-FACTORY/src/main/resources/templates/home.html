@@ -24,8 +24,8 @@
             <a th:href="@{/item/viewall}" class="mx-2 btn btn-outline-warning">Lihat Semua Item</a>
         </div>
 <!--        <div>-->
-        <div sec:authorize="hasAuthority('ADMIN')">
-<!--        <div>-->
+<!--        <div sec:authorize="hasAuthority('ADMIN')">-->
+        <div>
             <a th:href="@{/pegawai/add}" class="mx-2 btn btn-outline-warning">Tambah Pegawai Baru</a>
         </div>
         <div sec:authorize="hasAnyAuthority('STAFF_GUDANG','STAFF_OPERASIONAL')">
