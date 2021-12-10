@@ -8,6 +8,8 @@ import apap.group.assignment.SIFACTORY.rest.ItemDetail;
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.rest.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -49,11 +51,26 @@ public class RequestUpdateItemRestServiceImpl implements RequestUpdateItemRestSe
     }
 
     @Override
-    public Mono<ItemDetail> updateItem(String uuid, Integer stok, Long idRequestUpdateItem, PegawaiModel staf, Integer mesin, Integer kategori) {
-        MultiValueMap<String, Integer> data = new LinkedMultiValueMap<>();
-        data.add("stok", stok);
-        requestUpdateItemService.updateRequestUpdateItem(idRequestUpdateItem, staf, mesin, uuid, stok, kategori);
-        return this.webClientItem.put().uri("/api/item" + uuid).retrieve().bodyToMono(ItemDetail.class);
+    public Mono<String> updateItem(String uuid, Integer stokTambahan, Long idRequestUpdateItem, PegawaiModel staf, Integer mesin, Integer kategori) {
+//        MultiValueMap<String, Integer> data = new LinkedMultiValueMap<>();
+        System.out.println("stok di restservice = " + stokTambahan);
+        System.out.println("uuid = " + uuid);
+//        data.add("stok", stokTambahan);
+        requestUpdateItemService.updateRequestUpdateItem(idRequestUpdateItem, staf, mesin, uuid, stokTambahan, kategori);
+        System.out.println(this.webClientItem
+                .put()
+                .uri("/api/item/" + uuid)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .bodyValue(stokTambahan)
+                .retrieve()
+                .bodyToMono(String.class).block());
+        return this.webClientItem
+                .put()
+                .uri("/api/item/" + uuid)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .bodyValue(stokTambahan)
+                .retrieve()
+                .bodyToMono(String.class);
     }
 
     public RequestUpdateItemRestServiceImpl(WebClient.Builder webClientBuilder) {

@@ -24,7 +24,8 @@
                     <p th:text="'Harga Item : ' + ${item.harga}"></p>
                     <p th:text="'Stok Item : ' + ${item.stok}"></p>
                     <p th:text="'Kategori Item : ' + ${item.kategori}"></p>
-                    Jumlah Stok Ditambahkan :  <input th:value="${stokTambahan}" type="number" name="stokTambahan" readonly="readonly"><br><br>
+                    Jumlah Stok Ditambahkan :  <input th:value="${stokTambahan}" type="number" disabled="disabled"><br><br>
+                    <input th:value="${item.stok + stokTambahan}" type="hidden" name="stokTambahan">
                     <h2 th:text="'Stok Tambahan : ' + ${stokTambahan}"></h2>
 
                     Mesin :

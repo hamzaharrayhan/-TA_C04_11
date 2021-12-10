@@ -67,7 +67,7 @@ public class RequestUpdateItemController {
         for (MesinModel mesin: listMesin) {
             if (mesin.getIdKategori() == reqUpdateItem.getIdKategori() && mesin.getKapasitas() > 0) {
                 listMesinByKategori.add(mesin);
-                System.out.println(mesin.getNama());
+//                System.out.println(mesin.getNama());
             }
         }
 //        for (MesinModel m: listMesinByKategori) {
@@ -95,7 +95,7 @@ public class RequestUpdateItemController {
             Model model
     ) {
         PegawaiModel staf = pegawaiService.getPegawaiByUsername(username);
-//        System.out.println("iditem = " + uuid);
+        System.out.println("nama item = " + item.getNama());
 //        System.out.println("stok = " + stokTambahan);
 //        System.out.println("kategori = " + kategori);
         // do update

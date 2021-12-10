@@ -39,9 +39,9 @@ public class RequestUpdateItemServiceImpl implements RequestUpdateItemService{
     public void updateRequestUpdateItem(Long idRequestUpdateItem, PegawaiModel staf, Integer mesin, String uuid, Integer stok, Integer kategori) {
         ProduksiModel produksi = new ProduksiModel();
 //        LocalDate time = LocalDate.now();
-        System.out.println(uuid);
-        System.out.println(stok);
-        System.out.println(kategori);
+//        System.out.println(uuid);
+//        System.out.println(stok);
+//        System.out.println(kategori);
         java.util.Date date = new java.util.Date();
         produksi.setRequestUpdateItem(getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem));
         produksi.setPegawai(staf);
@@ -55,6 +55,7 @@ public class RequestUpdateItemServiceImpl implements RequestUpdateItemService{
         MesinModel mesinSelected = mesinService.getMesinByIdMesin(Long.valueOf(mesin));
         produksi.setMesin(mesinSelected);
         mesinSelected.setKapasitas(mesinSelected.getKapasitas() - 1);
+        System.out.println("tgl produksi yang mau disave = " + produksi.getTanggalProduksi());
         produksiDB.save(produksi);
     }
 
