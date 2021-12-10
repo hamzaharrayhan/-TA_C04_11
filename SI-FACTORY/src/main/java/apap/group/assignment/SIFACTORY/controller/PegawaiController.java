@@ -49,7 +49,7 @@ public class PegawaiController {
                 return "error-delete-pegawai";
             }
         }
-//        pegawaiService.addCounter(admin);
+        pegawaiService.addCounter(admin);
         pegawaiService.addPegawai(pegawai);
         model.addAttribute("pegawai", pegawai);
         return "redirect:/";
