@@ -1,29 +1,27 @@
 package apap.group.assignment.SIFACTORY.controller;
 
 import apap.group.assignment.SIFACTORY.model.MesinModel;
-import apap.group.assignment.SIFACTORY.service.MesinService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import apap.group.assignment.SIFACTORY.model.PegawaiModel;
 import apap.group.assignment.SIFACTORY.repository.MesinDB;
 import apap.group.assignment.SIFACTORY.rest.ItemDetail;
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.service.ItemRestService;
+import apap.group.assignment.SIFACTORY.service.MesinService;
 import apap.group.assignment.SIFACTORY.service.PegawaiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/item")
@@ -36,7 +34,7 @@ public class ItemController {
     private ItemRestService itemRestService;
 
     @Autowired
-    private MesinService mesinService;
+    private MesinService mesinRestService;
     private MesinDB mesinDB;
 
     @RequestMapping(value = "/propose-item", method = RequestMethod.GET)
@@ -87,40 +85,57 @@ public class ItemController {
     @GetMapping("/update/{uuid}")
     public String updateItemForm (
             @PathVariable("uuid") String uuid, Model model){
-        ItemModel item = itemRestService.getItemByUuid(uuid);
-        String kategori = itemRestService.getItemByUuid(uuid).getKategori();
-        Integer idKategori = mesinService.getIdKategoriByKategori(kategori);
-        List<MesinModel> listMesin = mesinService.getMesinByIdKategori(idKategori);
+        try {
+            ItemModel item = itemRestService.getItemByUuid(uuid);
+            String kategori = itemRestService.getItemByUuid(uuid).getKategori();
+            List<MesinModel> listMesin = mesinRestService.getListMesinByKategori(item);
 
-//        Integer stok = item.getStok();
-
-        model.addAttribute("item", item);
-        model.addAttribute("listMesin", listMesin);
-        return "form-update-item";
+            model.addAttribute("item", item);
+            model.addAttribute("listMesin", listMesin);
+            return "form-update-item";
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Item dengan uuid " + uuid + " tidak ditemukan."
+            );
+        }
     }
 
     @PostMapping("/update")
     public String updateItemSubmit(
             @ModelAttribute ItemModel item,
-//            @RequestParam("nama") String nama,
-//            @RequestParam("harga") Integer harga,
-//            @RequestParam("stok") Integer stok,
-//            @RequestParam("kategori") String kategori,
             @RequestParam("jumlahStokDitambahkan") Integer jumlahStokDitambahkan,
+            @RequestParam("mesin") MesinModel mesin,
             Model model
-    ) throws JsonProcessingException {
-
-        System.out.println("item uuid sebelum update: " + item.getUuid());
-        System.out.println("item nama sebelum update: " + item.getNama());
-        System.out.println("item harga sebelum update: " + item.getHarga());
-        System.out.println("item stok sebelum update: " + item.getStok());
-        System.out.println("item kategori sebelum update: " + item.getKategori());
-
-        itemRestService.updateItem(item, jumlahStokDitambahkan);
-        System.out.println("item stok sesudah update: " + item.getStok());
+    ) {
+        itemRestService.updateItem(item, jumlahStokDitambahkan, mesin);
 
         model.addAttribute("jumlahStokDitambahkan", jumlahStokDitambahkan);
         model.addAttribute("item", item);
+        model.addAttribute("mesin", mesin);
         return "update-item";
     }
+
+    @PostMapping(value = "/update/{uuid}")
+    private ItemModel updateItem (@PathVariable("uuid") String uuid,
+                                  @RequestParam("jumlahStokDitambahkan") Integer jumlahStokDitambahkan,
+                                  @RequestParam("mesin") MesinModel mesin,
+                                  @RequestBody ItemModel item,
+                                  Model model){
+        try{
+            String kategori = itemRestService.getItemByUuid(uuid).getKategori();
+            List<MesinModel> listMesin = mesinRestService.getListMesinByKategori(item);
+
+            model.addAttribute("item", item);
+            model.addAttribute("listMesin", listMesin);
+
+            return itemRestService.updateItem(item, jumlahStokDitambahkan, mesin);
+
+        } catch (NoSuchElementException e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Item dengan uuid " + uuid + " tidak ditemukan."
+            );
+        }
+    }
+
+
 }

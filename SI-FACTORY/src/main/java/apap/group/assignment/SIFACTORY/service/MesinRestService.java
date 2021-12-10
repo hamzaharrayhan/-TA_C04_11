@@ -8,5 +8,4 @@ public interface MesinRestService {
     List<MesinModel> retrieveListMesin();
     MesinModel getMesinByIdMesin(Long idMesin);
     List<MesinModel> getMesinByIdKategori(Integer idKategori);
-    Integer getIdKategoriByKategori(String kategori);
 }
