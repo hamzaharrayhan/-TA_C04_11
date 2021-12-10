@@ -25,6 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pegawai/add").hasAuthority("ADMIN")
                 .antMatchers("/request-update-item/viewall").hasAnyAuthority("STAFF_GUDANG", "STAFF_OPERASIONAL")
                 .antMatchers("/item/propose-item").hasAuthority("FACTORY_MANAGER")
+                .antMatchers("/delivery/list-delivery").hasAnyAuthority("STAFF_KURIR", "STAFF_OPERASIONAL")
+                .antMatchers("/delivery/kirim/**").hasAuthority("STAFF_KURIR")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
