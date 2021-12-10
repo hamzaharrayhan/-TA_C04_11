@@ -1,16 +1,23 @@
 package apap.group.assignment.SIFACTORY.controller;
 
+import apap.group.assignment.SIFACTORY.model.MesinModel;
+import apap.group.assignment.SIFACTORY.model.PegawaiModel;
 import apap.group.assignment.SIFACTORY.model.RequestUpdateItemModel;
-import apap.group.assignment.SIFACTORY.service.RequestUpdateItemService;
+import apap.group.assignment.SIFACTORY.rest.ItemModel;
+import apap.group.assignment.SIFACTORY.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 public class RequestUpdateItemController {
@@ -18,6 +25,18 @@ public class RequestUpdateItemController {
     @Qualifier("requestUpdateItemServiceImpl")
     @Autowired
     private RequestUpdateItemService requestUpdateItemService;
+
+    @Autowired
+    private RequestUpdateItemRestService requestUpdateItemRestService;
+
+    @Autowired
+    private MesinService mesinService;
+
+    @Autowired
+    private PegawaiService pegawaiService;
+
+    @Autowired
+    private ItemRestService itemRestService;
 
     @GetMapping("/request-update-item/viewall")
     public String listRequestUpdateItem(Model model){
@@ -32,5 +51,62 @@ public class RequestUpdateItemController {
 
         //Return view template yang diinginkan
         return "viewall-request-update-item";
+    }
+
+    @GetMapping("/item/update-request/{idRequestUpdateItem}/{uuid}")
+    public String updateReqItemForm(
+            @PathVariable Long idRequestUpdateItem,
+            @PathVariable("uuid") String uuid,
+            Model model
+    ) {
+        RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
+        try {
+            List<MesinModel> listMesin = mesinService.getMesinList();
+            List<MesinModel> listMesinByKategori = new ArrayList<>();
+            System.out.println(reqUpdateItem.getIdKategori());
+            ItemModel item = itemRestService.getItemByUuid(uuid);
+            // filter mesin berdasarkan kategori
+            for (MesinModel mesin: listMesin) {
+                if (mesin.getIdKategori() == reqUpdateItem.getIdKategori() && mesin.getKapasitas() > 0) {
+                    listMesinByKategori.add(mesin);
+//                System.out.println(mesin.getNama());
+                }
+            }
+            model.addAttribute("stokTambahan", reqUpdateItem.getTambahanStok());
+            model.addAttribute("idRequestUpdateItem", idRequestUpdateItem);
+            model.addAttribute("item", item);
+            model.addAttribute("listMesin", listMesinByKategori);
+            return "form-update-reqUpdateItem";
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Item dengan uuid " + uuid + " tidak ditemukan."
+            );
+        }
+    }
+
+    @PostMapping("/item/update-request")
+    public String updateItemSubmit(
+            @ModelAttribute ItemModel item,
+            @RequestParam("jumlahStokDitambahkan") Integer jumlahStokDitambahkan,
+            @RequestParam("mesin") MesinModel mesin,
+            String username,
+            Long idRequestUpdateItem,
+            Model model
+    ) {
+        PegawaiModel staf = pegawaiService.getPegawaiByUsername(username);
+        System.out.println("jumlah stok total = " + jumlahStokDitambahkan);
+        // do update
+        requestUpdateItemRestService.updateReqItem(item, jumlahStokDitambahkan, mesin, username, idRequestUpdateItem);
+
+        // set executed == TRUE
+        requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem).setExecuted(true);
+
+        // add counter pegawai
+        pegawaiService.addCounter(staf);
+
+        model.addAttribute("jumlahStokDitambahkan", jumlahStokDitambahkan);
+        model.addAttribute("item", item);
+        model.addAttribute("mesin", mesin);
+        return "update-item";
     }
 }

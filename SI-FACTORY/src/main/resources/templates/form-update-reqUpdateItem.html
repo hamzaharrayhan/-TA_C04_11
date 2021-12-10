@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <title>21 Cineplux</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Update Bioskop</h2>
+                <br>
+                <form th:action="@{/item/update-request}" th:object="${item}" method="POST">
+                    <input type="hidden" th:field="*{uuid}" name="uuid">
+                    <input type="hidden" name="username" th:value="${#httpServletRequest.userPrincipal.name}">
+                    <input type="hidden" name="idRequestUpdateItem" th:value="${idRequestUpdateItem}">
+
+                    Nama Item : <input
+                        th:text="${item.nama}" type="hidden" name="nama" id="nama" th:field="*{nama}" th:value="*{nama}"><br>
+
+                    Harga Item : <input
+                        th:text="${item.harga}" type="hidden" name="harga" id="harga" th:field="*{harga}" th:value="*{harga}"><br>
+
+                    Stok Item : <input
+                        th:text="${item.stok}" type="hidden" name="stok" id="stok" th:field="*{stok}" th:value="*{stok}"><br>
+
+                    Kategori Item: <input
+                        th:text="${item.kategori}" type="hidden" name="kategori" id="kategori" th:field="*{kategori}" th:value="*{kategori}"><br>
+
+                    Jumlah Stok Ditambahkan :
+<!--                    <input type="number" name="jumlahStokDitambahkan" id="jumlahStokDitambahkan">-->
+                    <input th:value="${stokTambahan}" type="number" disabled="disabled"><br><br>
+
+                    <input th:value="${item.stok + stokTambahan}" type="hidden" name="jumlahStokDitambahkan">
+
+                    Mesin :
+                    <select name="mesin">
+                        <option selected value=""> -- Pilih Mesin -- </option>
+                        <option th:each="mesin : ${listMesin}" th:value="${mesin.idMesin}" th:text="${mesin.nama}"></option>
+                    </select>
+                    <br><br>
+
+                    <button class="btn btn-warning" type="submit">Update</button>
+                </form><br>
+<!--                <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>-->
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="/">Home</a>
+</div>
+
+</body>
+
+</html>
