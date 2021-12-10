@@ -7,6 +7,7 @@ import apap.group.assignment.SIFACTORY.model.RequestUpdateItemModel;
 import apap.group.assignment.SIFACTORY.repository.MesinDB;
 import apap.group.assignment.SIFACTORY.repository.ProduksiDB;
 import apap.group.assignment.SIFACTORY.repository.RequestUpdateItemDB;
+import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -30,31 +31,26 @@ public class RequestUpdateItemServiceImpl implements RequestUpdateItemService{
     @Autowired
     MesinService mesinService;
 
+    @Autowired
+    ItemRestService itemRestService;
+
     @Override
     public List<RequestUpdateItemModel> getRequestUpdateItemList() {
         return requestUpdateItemDB.findAll();
     }
 
     @Override
-    public void updateRequestUpdateItem(Long idRequestUpdateItem, PegawaiModel staf, Integer mesin, String uuid, Integer stok, Integer kategori) {
+    public void updateProduksiItem(ItemModel item, Integer jumlahStokDitambahkan, PegawaiModel pegawai, MesinModel mesin, Long idRequestUpdateItem) {
         ProduksiModel produksi = new ProduksiModel();
-//        LocalDate time = LocalDate.now();
-//        System.out.println(uuid);
-//        System.out.println(stok);
-//        System.out.println(kategori);
         java.util.Date date = new java.util.Date();
         produksi.setRequestUpdateItem(getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem));
-        produksi.setPegawai(staf);
-        produksi.setIdItem(uuid);
-        produksi.setIdKategori(kategori);
-        produksi.setTambahanStok(stok);
+        produksi.setPegawai(pegawai);
+        produksi.setIdItem(item.getUuid());
+        produksi.setIdKategori(itemRestService.getIdKategoriByKategori(item.getKategori()));
+        produksi.setTambahanStok(jumlahStokDitambahkan);
         produksi.setTanggalProduksi(date);
-//        produksi.getRequestUpdateItem().setIdRequestUpdateItem(idRequestUpdateItem);
-//        produksi.getPegawai().setIdPegawai(staf.getIdPegawai());
-//        produksi.getMesin().setIdMesin(Long.valueOf(mesin));
-        MesinModel mesinSelected = mesinService.getMesinByIdMesin(Long.valueOf(mesin));
-        produksi.setMesin(mesinSelected);
-        mesinSelected.setKapasitas(mesinSelected.getKapasitas() - 1);
+        produksi.setMesin(mesin);
+        mesin.setKapasitas(mesin.getKapasitas() - 1);
         System.out.println("tgl produksi yang mau disave = " + produksi.getTanggalProduksi());
         produksiDB.save(produksi);
     }

@@ -7,17 +7,17 @@ import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 public class RequestUpdateItemController {
@@ -53,53 +53,50 @@ public class RequestUpdateItemController {
         return "viewall-request-update-item";
     }
 
-    @GetMapping("/item/update-request/{idRequestUpdateItem}")
-    public String updateItemForm(
+    @GetMapping("/item/update-request/{idRequestUpdateItem}/{uuid}")
+    public String updateReqItemForm(
             @PathVariable Long idRequestUpdateItem,
+            @PathVariable("uuid") String uuid,
             Model model
     ) {
-        List<MesinModel> listMesin = mesinService.getMesinList();
-        List<MesinModel> listMesinByKategori = new ArrayList<>();
         RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
-        System.out.println(reqUpdateItem.getIdKategori());
-        ItemModel item = itemRestService.getItemByUuid(reqUpdateItem.getIdItem());
-        // filter mesin berdasarkan kategori
-        for (MesinModel mesin: listMesin) {
-            if (mesin.getIdKategori() == reqUpdateItem.getIdKategori() && mesin.getKapasitas() > 0) {
-                listMesinByKategori.add(mesin);
+        try {
+            List<MesinModel> listMesin = mesinService.getMesinList();
+            List<MesinModel> listMesinByKategori = new ArrayList<>();
+            System.out.println(reqUpdateItem.getIdKategori());
+            ItemModel item = itemRestService.getItemByUuid(uuid);
+            // filter mesin berdasarkan kategori
+            for (MesinModel mesin: listMesin) {
+                if (mesin.getIdKategori() == reqUpdateItem.getIdKategori() && mesin.getKapasitas() > 0) {
+                    listMesinByKategori.add(mesin);
 //                System.out.println(mesin.getNama());
+                }
             }
+            model.addAttribute("stokTambahan", reqUpdateItem.getTambahanStok());
+            model.addAttribute("idRequestUpdateItem", idRequestUpdateItem);
+            model.addAttribute("item", item);
+            model.addAttribute("listMesin", listMesinByKategori);
+            return "form-update-reqUpdateItem";
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Item dengan uuid " + uuid + " tidak ditemukan."
+            );
         }
-//        for (MesinModel m: listMesinByKategori) {
-//            System.out.println(m.getNama());
-//        }
-//        RequestUpdateItemModel reqUpdateItem = requestUpdateItemRestService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
-        model.addAttribute("stokTambahan", reqUpdateItem.getTambahanStok());
-        model.addAttribute("kategori", reqUpdateItem.getIdKategori());
-        model.addAttribute("idRequestUpdateItem", reqUpdateItem.getIdRequestUpdateItem());
-        model.addAttribute("uuid", item.getUuid());
-        model.addAttribute("item", item);
-        model.addAttribute("listMesin", listMesinByKategori);
-        return "form-update-reqUpdateItem";
     }
 
     @PostMapping("/item/update-request")
     public String updateItemSubmit(
             @ModelAttribute ItemModel item,
-            String uuid,
+            @RequestParam("jumlahStokDitambahkan") Integer jumlahStokDitambahkan,
+            @RequestParam("mesin") MesinModel mesin,
             String username,
-            Integer mesin,
-            Integer stokTambahan,
-            Integer kategori,
             Long idRequestUpdateItem,
             Model model
     ) {
         PegawaiModel staf = pegawaiService.getPegawaiByUsername(username);
-        System.out.println("nama item = " + item.getNama());
-//        System.out.println("stok = " + stokTambahan);
-//        System.out.println("kategori = " + kategori);
+        System.out.println("jumlah stok total = " + jumlahStokDitambahkan);
         // do update
-        requestUpdateItemRestService.updateItem(uuid, stokTambahan, idRequestUpdateItem, staf, mesin, kategori);
+        requestUpdateItemRestService.updateReqItem(item, jumlahStokDitambahkan, mesin, username, idRequestUpdateItem);
 
         // set executed == TRUE
         requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem).setExecuted(true);
@@ -107,7 +104,9 @@ public class RequestUpdateItemController {
         // add counter pegawai
         pegawaiService.addCounter(staf);
 
-        model.addAttribute("uuid", uuid);
-        return "update-req-update-item";
+        model.addAttribute("jumlahStokDitambahkan", jumlahStokDitambahkan);
+        model.addAttribute("item", item);
+        model.addAttribute("mesin", mesin);
+        return "update-item";
     }
 }

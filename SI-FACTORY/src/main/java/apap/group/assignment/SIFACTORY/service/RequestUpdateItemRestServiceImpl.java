@@ -1,4 +1,5 @@
 package apap.group.assignment.SIFACTORY.service;
+import apap.group.assignment.SIFACTORY.model.MesinModel;
 import apap.group.assignment.SIFACTORY.model.PegawaiModel;
 import apap.group.assignment.SIFACTORY.model.ProduksiModel;
 import apap.group.assignment.SIFACTORY.model.RequestUpdateItemModel;
@@ -10,6 +11,8 @@ import apap.group.assignment.SIFACTORY.rest.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -34,43 +37,35 @@ public class RequestUpdateItemRestServiceImpl implements RequestUpdateItemRestSe
     @Autowired
     private RequestUpdateItemService requestUpdateItemService;
 
+    @Autowired
+    private PegawaiService pegawaiService;
+
+    @Autowired
+    private ItemRestService itemRestService;
+
     @Override
     public RequestUpdateItemModel addRequestUpdateItem(RequestUpdateItemModel item) {
         item.setExecuted(false);
         return requestUpdateItemDB.save(item);
     }
 
-    @Override
-    public RequestUpdateItemModel getRequestUpdateItemByIdRequestUpdateItem(Long idRequestUpdateItem) {
-        Optional<RequestUpdateItemModel> requestUpdateItem = requestUpdateItemDB.findByIdRequestUpdateItem(idRequestUpdateItem);
-        if(requestUpdateItem.isPresent()){
-            return requestUpdateItem.get();
-        } else {
-            throw new NoSuchElementException();
-        }
-    }
+//    @Override
+//    public RequestUpdateItemModel getRequestUpdateItemByIdRequestUpdateItem(Long idRequestUpdateItem) {
+//        Optional<RequestUpdateItemModel> requestUpdateItem = requestUpdateItemDB.findByIdRequestUpdateItem(idRequestUpdateItem);
+//        if(requestUpdateItem.isPresent()){
+//            return requestUpdateItem.get();
+//        } else {
+//            throw new NoSuchElementException();
+//        }
+//    }
 
     @Override
-    public Mono<String> updateItem(String uuid, Integer stokTambahan, Long idRequestUpdateItem, PegawaiModel staf, Integer mesin, Integer kategori) {
-//        MultiValueMap<String, Integer> data = new LinkedMultiValueMap<>();
-        System.out.println("stok di restservice = " + stokTambahan);
-        System.out.println("uuid = " + uuid);
-//        data.add("stok", stokTambahan);
-        requestUpdateItemService.updateRequestUpdateItem(idRequestUpdateItem, staf, mesin, uuid, stokTambahan, kategori);
-        System.out.println(this.webClientItem
-                .put()
-                .uri("/api/item/" + uuid)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(stokTambahan)
-                .retrieve()
-                .bodyToMono(String.class).block());
-        return this.webClientItem
-                .put()
-                .uri("/api/item/" + uuid)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(stokTambahan)
-                .retrieve()
-                .bodyToMono(String.class);
+    public ItemModel updateReqItem(ItemModel item, Integer jumlahStokDitambahkan, MesinModel mesin, String username, Long idRequestUpdateItem) {
+        PegawaiModel pegawai = pegawaiService.getPegawaiByUsername(username);
+        item.setStok(jumlahStokDitambahkan);
+        itemRestService.putItem(item);
+        requestUpdateItemService.updateProduksiItem(item, jumlahStokDitambahkan, pegawai, mesin, idRequestUpdateItem);
+        return item;
     }
 
     public RequestUpdateItemRestServiceImpl(WebClient.Builder webClientBuilder) {

@@ -15,10 +15,8 @@
             <div class="justify-content-center">
                 <h2>Update Bioskop</h2>
                 <br>
-                <form th:action="@{/item/update-request}" th:object="${item}" method="POST">
+                <form th:action="@{/item/update}" th:object="${item}" method="POST">
                     <input type="hidden" th:field="*{uuid}" name="uuid">
-                    <input type="hidden" name="username" th:value="${#httpServletRequest.userPrincipal.name}">
-                    <input type="hidden" name="idRequestUpdateItem" th:value="${idRequestUpdateItem}">
 
                     Nama Item : <input
                         th:text="${item.nama}" type="hidden" name="nama" id="nama" th:field="*{nama}" th:value="*{nama}"><br>
@@ -32,11 +30,8 @@
                     Kategori Item: <input
                         th:text="${item.kategori}" type="hidden" name="kategori" id="kategori" th:field="*{kategori}" th:value="*{kategori}"><br>
 
-                    Jumlah Stok Ditambahkan :
-<!--                    <input type="number" name="jumlahStokDitambahkan" id="jumlahStokDitambahkan">-->
-                    <input th:value="${stokTambahan}" type="number" disabled="disabled"><br><br>
-
-                    <input th:value="${item.stok + stokTambahan}" type="hidden" name="jumlahStokDitambahkan">
+                    Jumlah Stok Ditambahkan : <input
+                        type="number" name="jumlahStokDitambahkan" id="jumlahStokDitambahkan"><br><br>
 
                     Mesin :
                     <select name="mesin">
@@ -47,7 +42,7 @@
 
                     <button class="btn btn-warning" type="submit">Update</button>
                 </form><br>
-<!--                <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>-->
+                <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>
             </div>
         </div>
     </div>
