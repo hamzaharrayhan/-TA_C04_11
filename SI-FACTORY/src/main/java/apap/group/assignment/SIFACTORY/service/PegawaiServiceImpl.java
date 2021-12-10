@@ -23,7 +23,6 @@ public class PegawaiServiceImpl implements PegawaiService{
         pegawai.setPassword(pass);
         String[] arrOfUsername = pegawai.getUsername().split(",", 5);
         String usernameAdmin = (String) Array.get(arrOfUsername, arrOfUsername.length-1);
-        System.out.println("usernameAdmin di impl = " + usernameAdmin);
         pegawai.setUsername(usernameAdmin);
         return pegawaiDB.save(pegawai);
     }
@@ -32,6 +31,7 @@ public class PegawaiServiceImpl implements PegawaiService{
     public String encrypt(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
+        System.out.println(hashedPassword);
         return hashedPassword;
     }
 
