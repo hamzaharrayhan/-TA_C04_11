@@ -33,7 +33,7 @@ public class DeliveryServiceImpl implements DeliveryService{
 
     @Override
     public Map<Long,String> alamatCabang(){
-        JsonNode jsonNode = this.webClient.get().uri("/api/cabang/list-alamat-cabang").retrieve().bodyToMono(JsonNode.class).block();
+        JsonNode jsonNode = this.webClient.get().uri("/api/cabang/list-alamat-cabang").retrieve().bodyToMono(JsonNode.class).block().get("result");
         Map<Long, String> listAlamat = new HashMap<>();
         for (JsonNode j : jsonNode){
             listAlamat.put(j.get("id").asLong(),j.get("alamat").asText());

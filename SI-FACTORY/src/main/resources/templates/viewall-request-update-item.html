@@ -36,12 +36,12 @@
                 <td th:text="${requestUpdateItem.idKategori}"></td>
                 <td th:text="${requestUpdateItem.tambahanStok}"></td>
                 <td th:text="${requestUpdateItem.tanggalRequest}"></td>
-                <td th:text="${requestUpdateItem.delivery.idDelivery}"></td>
-                <td th:text="${requestUpdateItem.produksi.idProduksi}"></td>
+                <td th:text="${requestUpdateItem.delivery?.idDelivery}"></td>
+                <td th:text="${requestUpdateItem.produksi?.idProduksi}"></td>
                 <td th:text="${requestUpdateItem.executed}"></td>
                 <td th:if="${requestUpdateItem.executed == false}">
                     <div sec:authorize="hasAuthority('STAFF_GUDANG')">
-                        <a class="mx-2 btn btn-warning" th:href="#">Update</a>
+                        <a class="mx-2 btn btn-warning" th:href="@{/item/update-request/} + ${requestUpdateItem.idRequestUpdateItem} + @{/} + ${requestUpdateItem.idItem}">Update</a>
                     </div>
                 </td>
             </tr>
