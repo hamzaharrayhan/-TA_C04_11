@@ -35,6 +35,8 @@ public class ItemController {
 
     @Autowired
     private MesinService mesinRestService;
+
+    @Autowired
     private MesinDB mesinDB;
 
     @RequestMapping(value = "/propose-item", method = RequestMethod.GET)
