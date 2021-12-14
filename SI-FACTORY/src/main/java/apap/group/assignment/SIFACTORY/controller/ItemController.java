@@ -117,21 +117,4 @@ public class ItemController {
         return "update-item";
     }
 
-    @PostMapping(value = "/update/{uuid}")
-    private ItemModel updateItem (@PathVariable("uuid") String uuid,
-                                  @RequestParam("jumlahStokDitambahkan") Integer jumlahStokDitambahkan,
-                                  @RequestParam("mesin") MesinModel mesin,
-                                  @RequestBody ItemModel item,
-                                  Model model){
-        try{
-            return itemRestService.updateItem(item, jumlahStokDitambahkan, mesin);
-
-        } catch (NoSuchElementException e){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Item dengan uuid " + uuid + " tidak ditemukan."
-            );
-        }
-    }
-
-
 }
