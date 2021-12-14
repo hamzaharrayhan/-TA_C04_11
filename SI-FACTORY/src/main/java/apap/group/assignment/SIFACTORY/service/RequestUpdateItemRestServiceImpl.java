@@ -7,6 +7,7 @@ import apap.group.assignment.SIFACTORY.repository.ProduksiDB;
 import apap.group.assignment.SIFACTORY.repository.RequestUpdateItemDB;
 import apap.group.assignment.SIFACTORY.rest.ItemDetail;
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
+import apap.group.assignment.SIFACTORY.rest.RequestUpdateItemDTO;
 import apap.group.assignment.SIFACTORY.rest.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -44,9 +45,15 @@ public class RequestUpdateItemRestServiceImpl implements RequestUpdateItemRestSe
     private ItemRestService itemRestService;
 
     @Override
-    public RequestUpdateItemModel addRequestUpdateItem(RequestUpdateItemModel item) {
-        item.setExecuted(false);
-        return requestUpdateItemDB.save(item);
+    public RequestUpdateItemModel addRequestUpdateItem(RequestUpdateItemDTO item) {
+        RequestUpdateItemModel rui = new RequestUpdateItemModel();
+        rui.setTanggalRequest(item.getTanggalRequest());
+        rui.setIdItem(item.getIdItem());
+        rui.setIdCabang(item.getIdCabang());
+        rui.setTambahanStok(item.getTambahanStok());
+        rui.setIdKategori(item.getIdKategori());
+        rui.setExecuted(false);
+        return requestUpdateItemDB.save(rui);
     }
 
 //    @Override
