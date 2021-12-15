@@ -1,6 +1,8 @@
 package apap.group.assignment.SIFACTORY.service;
 
 import apap.group.assignment.SIFACTORY.model.DeliveryModel;
+import apap.group.assignment.SIFACTORY.model.PegawaiModel;
+import apap.group.assignment.SIFACTORY.model.RequestUpdateItemModel;
 import apap.group.assignment.SIFACTORY.repository.DeliveryDB;
 import apap.group.assignment.SIFACTORY.rest.Setting;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,6 +23,9 @@ public class DeliveryServiceImpl implements DeliveryService{
     @Autowired
     private DeliveryDB deliveryDB;
 
+    @Autowired
+    private RequestUpdateItemService requestUpdateItemService;
+
     @Override
     public List<DeliveryModel> getListOfDelivery() {
         return deliveryDB.findAll();
@@ -29,6 +34,19 @@ public class DeliveryServiceImpl implements DeliveryService{
     @Override
     public List<DeliveryModel> listDeliveryByIdPegawai(Long id) {
         return deliveryDB.findAllByIdKurir(id);
+    }
+
+    @Override
+    public void addDelivery(RequestUpdateItemModel reqUpdateItem, PegawaiModel pegawai, PegawaiModel kurir) {
+        DeliveryModel delivery = new DeliveryModel();
+        java.util.Date date = new java.util.Date();
+        delivery.setRequestUpdateItem(reqUpdateItem);
+        delivery.setPegawai(pegawai);
+        delivery.setTanggalDibuat(date);
+        delivery.setSent(false);
+        delivery.setIdCabang(Long.valueOf(reqUpdateItem.getIdCabang()));
+        delivery.setIdKurir(kurir.getIdPegawai());
+        deliveryDB.save(delivery);
     }
 
     @Override
