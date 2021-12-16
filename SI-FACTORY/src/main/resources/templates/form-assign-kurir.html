@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
-    <title>21 Cineplux</title>
+    <title>SI-FACTORY</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -14,7 +14,7 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2>Assign Kurir</h2>
+                <h2 style="text-align:center">Assign Kurir</h2>
                 <br>
                 <form th:action="@{/delivery/assign-kurir}" th:object="${item}" method="POST">
                     <input type="hidden" th:field="*{uuid}" name="uuid">
@@ -35,16 +35,16 @@
                             <td>     : <input th:text="${reqUpdateItem.tambahanStok}" type="hidden" name="tambahanStok" th:value="${reqUpdateItem.tambahanStok}"><br></td>
                         </tr>
                     </table>
-
+                    <br><br>
                     Kurir yang bertugas: <br>
-                    <select class="form-select form-select-sm" aria-label="Default select example" name="kurir">
+                    <select class="form-control" aria-label="Default select example" name="kurir">
                         <option selected value=""> -- Pilih Kurir -- </option>
                         <option th:each="kurir : ${listKurir}" th:value="${kurir.idPegawai}" th:text="${kurir.nama}"></option>
                     </select>
-                    <br><br>
+                    <br>
 
                     <button class="btn btn-warning" type="submit">Update</button>
-                </form><br>
+                </form>
                 <!--                <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>-->
             </div>
         </div>
