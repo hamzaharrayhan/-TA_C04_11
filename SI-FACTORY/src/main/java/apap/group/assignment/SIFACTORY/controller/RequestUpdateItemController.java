@@ -108,11 +108,8 @@ public class RequestUpdateItemController {
         // set Produksi to req update item
         List<ProduksiModel> listProduksi = produksiService.getListOfProduksi();
         for (ProduksiModel prod: listProduksi) {
-//            System.out.println("ID REQ DALAM FOR = " + prod.getRequestUpdateItem().getIdRequestUpdateItem());
             if (prod.getRequestUpdateItem().getIdRequestUpdateItem() == idRequestUpdateItem) {
-//                System.out.println(prod.getRequestUpdateItem().getIdRequestUpdateItem());
                 reqUpdateItem.setProduksi(prod);
-//                System.out.println(prod.getIdProduksi());
             }
         }
 
