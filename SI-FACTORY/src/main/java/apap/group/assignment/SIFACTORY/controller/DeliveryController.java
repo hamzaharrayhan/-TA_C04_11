@@ -126,6 +126,12 @@ public class DeliveryController {
         PegawaiModel pegawai = pegawaiService.getPegawaiByUsername(username);
         RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
         deliveryService.addDelivery(reqUpdateItem, pegawai, kurir);
+        List<DeliveryModel> listDelivery = deliveryService.getListOfDelivery();
+        for (DeliveryModel deliv: listDelivery) {
+            if (deliv.getRequestUpdateItem().getIdRequestUpdateItem() == idRequestUpdateItem) {
+                reqUpdateItem.setDelivery(deliv);
+            }
+        }
         pegawaiService.addCounter(pegawai);
         model.addAttribute("kurir", kurir);
         model.addAttribute("idRequestUpdateItem", idRequestUpdateItem);

@@ -10,6 +10,7 @@ import java.util.Map;
 public interface DeliveryService {
     List<DeliveryModel> getListOfDelivery();
     List<DeliveryModel> listDeliveryByIdPegawai(Long id);
+    DeliveryModel getDeliveryByIdDelivery(Long idDelivery);
     void addDelivery(RequestUpdateItemModel reqUpdateItem, PegawaiModel pegawai, PegawaiModel kurir);
     Map<Long,String> alamatCabang();
 }

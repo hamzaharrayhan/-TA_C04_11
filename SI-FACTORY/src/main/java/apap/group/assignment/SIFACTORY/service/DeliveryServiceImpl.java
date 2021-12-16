@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -34,6 +35,15 @@ public class DeliveryServiceImpl implements DeliveryService{
     @Override
     public List<DeliveryModel> listDeliveryByIdPegawai(Long id) {
         return deliveryDB.findAllByIdKurir(id);
+    }
+
+    @Override
+    public DeliveryModel getDeliveryByIdDelivery(Long idDelivery) {
+        Optional<DeliveryModel> delivery = deliveryDB.findDeliveryByIdDelivery(idDelivery);
+        if (delivery.isPresent()) {
+            return delivery.get();
+        }
+        return null;
     }
 
     @Override
