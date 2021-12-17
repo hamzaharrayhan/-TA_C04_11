@@ -21,7 +21,7 @@
                 <thead>
                 <tr>
                     <th>No</th>
-<!--                    <th>ID Item</th>-->
+                    <th>ID Item</th>
                     <th>Nama</th>
                     <th>Harga</th>
                     <th>Stok</th>
@@ -33,13 +33,13 @@
                 <tr th:each="item, iterationStatus : ${entri.value}"
                     th:style="${iterationStatus.even} ? 'font-weight:bold;'">
                     <td th:text="${iterationStatus.count}"></td>
-<!--                    <td th:text="${item.uuid}"></td>-->
+                    <td th:text="${item.uuid}"></td>
                     <td th:text="${item.nama}" name="nama" id="nama" th:value="*{nama}" required></td>
                     <td th:text="${item.harga}" name="harga" id="harga" th:value="*{harga}" required></td>
                     <td th:text="${item.stok}" name="stok" id="stok" th:value="*{stok}" required></td>
                     <td th:text="${item.kategori}" name="kategori" id="kategori" th:value="*{kategori}" required></td>
                     <td>
-                        <a class="btn btn-sm btn-dark" th:href="@{'#'}">Detail</a>
+                        <a class="btn btn-sm btn-dark" th:href="@{/item/view/} + ${item.uuid}">Detail</a>
                         <a sec:authorize="hasAuthority('STAFF_GUDANG')" class="btn btn-sm btn-warning"
                            th:href="@{/item/update/} + ${item.uuid}">Update</a>
                     </td>
@@ -48,8 +48,6 @@
             </table>
         </div>
     </div>
-    <a class="btn btn-primary" href="/">Home</a>
-    <br><br>
 </div>
 </body>
 </html>

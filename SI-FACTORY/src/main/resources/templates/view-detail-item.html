@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Item</title>
+    <object th:include="'fragments/fragment' :: css" th:remove="tag"></object>
+    <object th:include="'fragments/fragment' :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="'fragments/fragment' :: navbar"></nav>
+<div class="container-fluid">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2 class="text-center">Detail Item</h2>
+                <br>
+                <table class="table table-responsive table-borderless">
+                    <tr>
+                        <th style="mso-cellspacing: 7px">Uuid</th>
+                        <td th:text="': ' + ${item.uuid}"></td>
+                    </tr>
+                    <tr>
+                        <th style="mso-cellspacing: 7px">Nama</th>
+                        <td th:text="': ' + ${item.nama}"></td>
+                    </tr>
+                    <tr>
+                        <th style="mso-cellspacing: 7px">Harga</th>
+                        <td th:text="': ' + ${item.harga}"></td>
+                    </tr>
+                    <tr>
+                        <th style="mso-cellspacing: 7px">Stok</th>
+                        <td th:text="': ' + ${item.stok}"></td>
+                    </tr>
+                    <tr>
+                        <th style="mso-cellspacing: 7px">Kategori</th>
+                        <td th:text="': ' + ${item.kategori}"></td>
+                    </tr>
+                </table><br><br>
+
+                <div th:if = "${listProduksiByItem.size != 0}">
+                    <h3 class="text-center">Daftar Produksi Item</h3>
+                    <table class="table table-responsive" style="width: 200%">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>ID Produksi</th>
+                            <th>Item</th>
+                            <th>Kategori</th>
+                            <th>Tambahan Stok</th>
+                            <th>Tanggal Produksi</th>
+                            <th>Mesin</th>
+                            <th>Pegawai</th>
+                            <th>ID Request Update Item</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="produksi, iterationStatus : ${listProduksiByItem}"
+                            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                            <td th:text="${iterationStatus.count}"></td>
+                            <td th:text="${produksi.idProduksi}"></td>
+                            <td th:text="${produksi.idItem}"></td>
+                            <td th:text="${produksi.idKategori}"></td>
+                            <td th:text="${produksi.tambahanStok}"></td>
+                            <td th:text="${produksi.tanggalProduksi}"></td>
+                            <td th:text="${produksi.mesin.nama}"></td>
+                            <td th:text="${produksi.pegawai.nama}"></td>
+                            <td th:if="${produksi.requestUpdateItem == null}">null</td>
+                            <td th:if="${produksi.requestUpdateItem != null}">
+                                <p th:text="${produksi.requestUpdateItem.idRequestUpdateItem"}></p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div th:unless="${listProduksiByItem.size != 0}">
+                    <h3>Item belum pernah diproduksi.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" th:href="@{/item/viewall}">Back</a>
+</div><br>
+
+</body>
+
+</html>
