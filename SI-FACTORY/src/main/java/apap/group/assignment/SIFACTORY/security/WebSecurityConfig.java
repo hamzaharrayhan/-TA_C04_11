@@ -55,7 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .withUser("admin").password(encoder().encode("admin8"))
 //                .roles("ADMIN");
 //    }
-//}
 
     @Autowired
     private UserDetailsService userDetailService;
@@ -64,4 +63,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(userDetailService).passwordEncoder(encoder());
     }
- }
+}
