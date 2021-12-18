@@ -2,29 +2,24 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title> SIFACTORY </title>
-
+    <title>SI-FACTORY</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
-
 <div class="container">
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
+                <h2 th:text="'Kurir ' + ${kurir.nama} + ' berhasil di-assign untuk request update item dengan ID ' + ${idRequestUpdateItem}"></h2>
                 <br>
-                <h2 class="text-center"
-                        th:text="'Item dengan nama ' + ${nama} + ' , harga ' +${harga}+ ' , stok ' + ${stok} + ' , dan ID Kategori ' + ${id} + ' berhasil di-proposed.'">
-                </h2>
-                <br>
-                <a class="mx-2 btn btn-warning align-items-center" th:href="@{/}">Kembali</a>
+                <a class="btn btn-primary" th:href="@{/request-update-item/viewall}">Kembali</a>
             </div>
         </div>
     </div>
+    <a class="btn btn-primary" href="/">Home</a>
 </div>
 
 </body>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title> SIFACTORY </title>
+    <object th:include="'fragments/'+${role} :: css" th:remove="tag"></object>
+    <object th:include="'fragments/'+${role} :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="'fragments/'+${role} :: navbar"></nav>
+<div class="container">
+    <br>
+    <h2 style="text-align:center;">Daftar Pegawai</h2>
+    <br>
+
+    <div th:if="${listPegawai.size() != 0}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Nama</th>
+                <th>Role</th>
+                <th>Gaji</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pegawai, iter : ${listPegawai}">
+                <td th:text="${iter.count}"</td>
+                <td th:text="${pegawai.nama}"></td>
+                <td th:text="${pegawai.role.namaRole}"></td>
+<!--                <td th:text="${pegawai.role.baseWages}"></td>-->
+                <div th:each="gajiPegawai, iterationStatus : ${gaji}">
+                    <td th:if="${iter.count} == ${iterationStatus.count}" th:text="'Rp'+${#numbers.formatInteger(gajiPegawai,3,'POINT')}+',00'"></td>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a class="mx-2 btn btn-warning align-items-center" href="/">Home</a>
+</div>
+
+</body>
+
+</html>
+

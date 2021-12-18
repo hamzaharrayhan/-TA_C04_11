@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>SI-FACTORY</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2 style="text-align:center">Assign Kurir</h2>
+                <br>
+                <form th:action="@{/delivery/assign-kurir}" th:object="${item}" method="POST" onsubmit="return confirm('Apakah anda sudah yakin?');">
+                    <input type="hidden" th:field="*{uuid}" name="uuid">
+                    <input type="hidden" name="username" th:value="${#httpServletRequest.userPrincipal.name}">
+<!--                    <input type="hidden" name="idRequestUpdateItem" th:value="${idRequestUpdateItem}">-->
+
+                    <table>
+                        <tr>
+                            <td>ID Request Update Item</td>
+                            <td>     : <input th:text="${idRequestUpdateItem}" type="hidden" name="idRequestUpdateItem" th:value="${idRequestUpdateItem}"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Nama Item</td>
+                            <td>     : <input th:text="${item.nama}" type="hidden" name="nama" th:value="${item.uuid}"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Tambahan Stok</td>
+                            <td>     : <input th:text="${reqUpdateItem.tambahanStok}" type="hidden" name="tambahanStok" th:value="${reqUpdateItem.tambahanStok}"><br></td>
+                        </tr>
+                    </table>
+                    <br><br>
+                    Kurir yang bertugas: <br>
+                    <select class="form-control" aria-label="Default select example" name="kurir">
+                        <option selected value=""> -- Pilih Kurir -- </option>
+                        <option th:each="kurir : ${listKurir}" th:value="${kurir.idPegawai}" th:text="${kurir.nama}"></option>
+                    </select>
+                    <br>
+
+                    <button class="btn btn-warning" type="submit">Update</button>
+                </form>
+                <!--                <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>-->
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="/">Home</a>
+</div>
+
+</body>
+
+</html>

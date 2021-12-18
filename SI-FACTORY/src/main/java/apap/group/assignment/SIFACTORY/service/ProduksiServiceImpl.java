@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Array;
 import java.util.List;
 
 @Service
@@ -13,11 +14,10 @@ import java.util.List;
 public class ProduksiServiceImpl implements ProduksiService {
 
     @Autowired
-    ProduksiDB produksiDB;
+    private ProduksiDB produksiDB;
 
     @Override
-    public List<ProduksiModel> getProduksiList() {
+    public List<ProduksiModel> getListOfProduksi() {
         return produksiDB.findAll();
     }
-
 }
