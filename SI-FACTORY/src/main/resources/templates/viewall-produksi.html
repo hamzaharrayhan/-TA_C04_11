@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title> SIFACTORY </title>
+    <object th:include="'fragments/fragment' :: css" th:remove="tag"></object>
+    <object th:include="'fragments/fragment' :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="'fragments/fragment' :: navbar"></nav>
+<div class="container-fluid">
+    <div class="dflex m-5">
+        <h2 style="text-align:center">Daftar Produksi</h2>
+        <br>
+
+        <div th:if="${listProduksi.size() != 0}">
+            <table class="table table-responsive text-center">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>ID Produksi</th>
+                    <th>Item</th>
+                    <th>Kategori</th>
+                    <th>Tambahan Stok</th>
+                    <th>Tanggal Produksi</th>
+                    <th>Mesin</th>
+                    <th>Pegawai</th>
+                    <th>ID Request Update Item</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="produksi, iter : ${listProduksi}"
+                    th:style="${iter.even} ? 'font-weight:bold;'">
+                    <td th:text="${iter.count}"></td>
+                    <td th:text="${produksi.idProduksi}"></td>
+                    <td th:text="${produksi.idItem}"></td>
+                    <td th:text="${produksi.idKategori}"></td>
+                    <td th:text="${produksi.tambahanStok}"></td>
+                    <td th:text="${produksi.tanggalProduksi}"></td>
+                    <td th:text="${produksi.mesin.nama}"></td>
+                    <td th:text="${produksi.pegawai.nama}"></td>
+                    <td th:if="${produksi.requestUpdateItem == null}">null</td>
+                    <td th:if="${produksi.requestUpdateItem != null}">
+                        <p th:text="${produksi.requestUpdateItem.idRequestUpdateItem}"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:unless="${listProduksi.size != 0}">
+            <h3>Produksi belum dilakukan.</h3>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
+

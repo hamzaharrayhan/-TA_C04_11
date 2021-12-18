@@ -104,15 +104,20 @@ public class ItemRestServiceImpl implements ItemRestService {
                 .retrieve()
                 .bodyToMono(HashMap.class)
                 .block();
-        HashMap result = (HashMap) response.get("result");
+
         ItemModel item = new ItemModel();
 
-        item.setUuid((String)result.get("uuid"));
-        item.setNama((String)result.get("nama"));
-        item.setHarga((Integer)result.get("harga"));
-        item.setStok((Integer)result.get("stok"));
-        item.setKategori((String)result.get("kategori"));
+        if (response.get("status").equals(404)) {
+            item = null;
+        } else {
+            HashMap result = (HashMap) response.get("result");
 
+            item.setUuid((String) result.get("uuid"));
+            item.setNama((String) result.get("nama"));
+            item.setHarga((Integer) result.get("harga"));
+            item.setStok((Integer) result.get("stok"));
+            item.setKategori((String) result.get("kategori"));
+        }
         return item;
     }
 
