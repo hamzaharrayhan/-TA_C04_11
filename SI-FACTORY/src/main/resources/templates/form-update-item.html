@@ -15,7 +15,7 @@
             <div class="justify-content-center">
                 <h2>Update Bioskop</h2>
                 <br>
-                <form th:action="@{/item/update}" th:object="${item}" method="POST">
+                <form th:action="@{/item/update}" th:object="${item}" method="POST" onsubmit="return confirm('Apakah anda sudah yakin?');">
                     <input type="hidden" th:field="*{uuid}" name="uuid">
 
                     Nama Item : <input
