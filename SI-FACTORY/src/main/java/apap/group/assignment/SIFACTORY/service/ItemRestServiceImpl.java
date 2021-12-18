@@ -130,6 +130,24 @@ public class ItemRestServiceImpl implements ItemRestService {
         return item;
     }
 
+    @Override
+    public Mono<String> putItem(ItemModel item) {
+        System.out.println(this.webClient
+                .put()
+                .uri("/api/item/"+item.getUuid())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .bodyValue(item)
+                .retrieve()
+                .bodyToMono(String.class).block());
+        return this.webClient
+                .put()
+                .uri("/api/item/"+item.getUuid())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .bodyValue(item)
+                .retrieve()
+                .bodyToMono(String.class);
+    }
+
     public void updateAfterSubmit(ItemModel item, Integer jumlahStokDitambahkan, PegawaiModel pegawai, MesinModel mesin) {
         ProduksiModel produksi = new ProduksiModel();
         Date tanggal = new Date();
@@ -150,24 +168,6 @@ public class ItemRestServiceImpl implements ItemRestService {
         // menambahkan add counter pada pegawai
         pegawaiService.addCounter(pegawai);
 
-    }
-
-    @Override
-    public Mono<String> putItem(ItemModel item) {
-        System.out.println(this.webClient
-                .put()
-                .uri("/api/item/"+item.getUuid())
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(item)
-                .retrieve()
-                .bodyToMono(String.class).block());
-        return this.webClient
-                .put()
-                .uri("/api/item/"+item.getUuid())
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(item)
-                .retrieve()
-                .bodyToMono(String.class);
     }
 
     @Override

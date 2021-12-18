@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 
 <head>
-    <title>SI-FACTORY</title>
+    <title>Item Updated</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -13,13 +13,13 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 th:text="'Item dengan nama item ' + ${item.nama} + ' berhasil diupdate'"></h2>
+                <h2 th:text="'Stok item dengan nama ' + ${item.nama} + ' pada kategori ' + ${item.kategori} + ' dengan harga '
+                + ${item.harga} + ' berhasil diupdate'"></h2>
                 <br>
-                <a class="btn btn-primary" th:href="@{/item/viewall}">Kembali</a>
+                <a class="btn btn-primary" th:href="@{/item/viewall}">Back</a>
             </div>
         </div>
     </div>
-    <a class="btn btn-primary" href="/">Home</a>
 </div>
 
 </body>
