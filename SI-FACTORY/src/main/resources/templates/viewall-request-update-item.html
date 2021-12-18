@@ -44,6 +44,11 @@
                         <a class="mx-2 btn btn-warning" th:href="@{/item/update-request/} + ${requestUpdateItem.idRequestUpdateItem} + @{/} + ${requestUpdateItem.idItem}">Update</a>
                     </div>
                 </td>
+                <td th:if="${requestUpdateItem.executed == true and requestUpdateItem.delivery?.idDelivery == null}">
+                    <div sec:authorize="hasAuthority('STAFF_OPERASIONAL')">
+                        <a class="mx-2 btn btn-warning" th:href="@{/delivery/assign-kurir/} + ${requestUpdateItem.idRequestUpdateItem} + @{/} + ${requestUpdateItem.idItem}">Buat Delivery</a>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>

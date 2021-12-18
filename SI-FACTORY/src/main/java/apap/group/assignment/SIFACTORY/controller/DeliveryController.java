@@ -2,22 +2,24 @@ package apap.group.assignment.SIFACTORY.controller;
 
 import apap.group.assignment.SIFACTORY.model.DeliveryModel;
 import apap.group.assignment.SIFACTORY.model.PegawaiModel;
+import apap.group.assignment.SIFACTORY.model.RequestUpdateItemModel;
 import apap.group.assignment.SIFACTORY.repository.DeliveryDB;
 import apap.group.assignment.SIFACTORY.repository.PegawaiDB;
+import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.service.DeliveryService;
+import apap.group.assignment.SIFACTORY.service.ItemRestService;
 import apap.group.assignment.SIFACTORY.service.PegawaiService;
+import apap.group.assignment.SIFACTORY.service.RequestUpdateItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/delivery")
@@ -28,7 +30,11 @@ public class DeliveryController {
     @Autowired
     private PegawaiService pegawaiService;
     @Autowired
+    private RequestUpdateItemService requestUpdateItemService;
+    @Autowired
     private DeliveryDB deliveryDB;
+    @Autowired
+    private ItemRestService itemRestService;
 
     @GetMapping("/list-delivery")
     public String listDelivery(Model model) {
@@ -79,5 +85,56 @@ public class DeliveryController {
             model.addAttribute("message", message);
             return "status-pengiriman";
         }
+    }
+
+    @GetMapping("/assign-kurir/{idRequestUpdateItem}/{uuid}")
+    public String assignKurirForm(
+            @PathVariable Long idRequestUpdateItem,
+            @PathVariable("uuid") String uuid,
+            Model model
+    ){
+        RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
+        try {
+            ItemModel item = itemRestService.getItemByUuid(uuid);
+            List<PegawaiModel> listPegawai = pegawaiService.getListOfPegawai();
+            List<PegawaiModel> listKurir = new ArrayList<>();
+            for (PegawaiModel pegawai: listPegawai) {
+                if (pegawai.getRole().getIdRole() == 2) {
+                    listKurir.add(pegawai);
+                }
+            }
+            model.addAttribute("reqUpdateItem", reqUpdateItem);
+            model.addAttribute("item", item);
+            model.addAttribute("idRequestUpdateItem", idRequestUpdateItem);
+            model.addAttribute("listKurir", listKurir);
+            return "form-assign-kurir";
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Item dengan uuid " + uuid + " tidak ditemukan."
+            );
+        }
+    }
+
+    @PostMapping("/assign-kurir")
+    public String assignKurirSubmit(
+            @ModelAttribute DeliveryModel delivery,
+            @RequestParam("kurir") PegawaiModel kurir,
+            String username,
+            Long idRequestUpdateItem,
+            Model model
+    ){
+        PegawaiModel pegawai = pegawaiService.getPegawaiByUsername(username);
+        RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
+        deliveryService.addDelivery(reqUpdateItem, pegawai, kurir);
+        List<DeliveryModel> listDelivery = deliveryService.getListOfDelivery();
+        for (DeliveryModel deliv: listDelivery) {
+            if (deliv.getRequestUpdateItem().getIdRequestUpdateItem() == idRequestUpdateItem) {
+                reqUpdateItem.setDelivery(deliv);
+            }
+        }
+        pegawaiService.addCounter(pegawai);
+        model.addAttribute("kurir", kurir);
+        model.addAttribute("idRequestUpdateItem", idRequestUpdateItem);
+        return "update-assign-kurir";
     }
 }
