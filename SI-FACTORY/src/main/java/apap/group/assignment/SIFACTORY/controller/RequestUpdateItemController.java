@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -107,10 +108,13 @@ public class RequestUpdateItemController {
         RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
         // set Produksi to req update item
         List<ProduksiModel> listProduksi = produksiService.getListOfProduksi();
+        while (list.remove(null)) {
+        }
         for (ProduksiModel prod: listProduksi) {
-            System.out.println(prod.getRequestUpdateItem().getIdRequestUpdateItem());
+            System.out.println(prod.getIdProduksi());
+//            System.out.println(prod.getRequestUpdateItem().getIdRequestUpdateItem());
             if (prod.getRequestUpdateItem().getIdRequestUpdateItem() == idRequestUpdateItem) {
-                reqUpdateItem.setProduksi(prod);
+                    reqUpdateItem.setProduksi(prod);
             }
         }
 
