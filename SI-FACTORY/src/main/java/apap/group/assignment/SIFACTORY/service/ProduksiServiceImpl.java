@@ -1,6 +1,7 @@
 package apap.group.assignment.SIFACTORY.service;
 
 import apap.group.assignment.SIFACTORY.model.ProduksiModel;
+import apap.group.assignment.SIFACTORY.model.RequestUpdateItemModel;
 import apap.group.assignment.SIFACTORY.repository.ProduksiDB;
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,6 +30,15 @@ public class ProduksiServiceImpl implements ProduksiService {
 
     public void deleteProduksi(ProduksiModel produksi) {
         produksiDB.delete(produksi);
+    }
+
+    @Override
+    public ProduksiModel getProduksiByIdProduksi(Long id) {
+        Optional<ProduksiModel> produksi = produksiDB.findByIdProduksi(id);
+        if (produksi.isPresent()) {
+            return produksi.get();
+        }
+        return null;
     }
 
     @Override
