@@ -16,7 +16,7 @@
         <script th:src="@{/js/bootstrap.min.js}"></script>
     </head>
 <body>
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand font-weight-bold text-warning" href="#">SIFACTORY</a>
     <button
             class="navbar-toggler"
@@ -42,7 +42,7 @@
             </li>
         </ul>
         <ul class="navbar-nav pull-right">
-            <a class="nav-item nav-link active" th:href="@{/logout}">Logout</a>
+            <a class="nav-item nav-link active text-secondary" th:href="@{/logout}">Logout</a>
         </ul>
     </div>
 </nav>
