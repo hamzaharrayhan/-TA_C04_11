@@ -37,7 +37,7 @@
             </li>
         </ul>
         <ul class="navbar-nav pull-right">
-            <a class="nav-item nav-link active" th:href="@{/logout}">Logout</a>
+            <a class="nav-item nav-link active" th:href="@{/logout}" onclick="return confirm('Apakah anda yakin untuk logout?');">Logout</a>
         </ul>
     </div>
 </nav>
