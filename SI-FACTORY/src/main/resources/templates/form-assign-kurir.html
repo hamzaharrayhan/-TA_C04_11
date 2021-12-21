@@ -6,6 +6,12 @@
     <title>SI-FACTORY</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+        body {
+            font-family: 'Poppins';
+        }
+    </style>
 </head>
 
 <body>
@@ -35,7 +41,7 @@
                             <td>     : <input th:text="${reqUpdateItem.tambahanStok}" type="hidden" name="tambahanStok" th:value="${reqUpdateItem.tambahanStok}"><br></td>
                         </tr>
                     </table>
-                    <br><br>
+                    <br>
                     Kurir yang bertugas: <br>
                     <select class="form-control" aria-label="Default select example" name="kurir">
                         <option selected value=""> -- Pilih Kurir -- </option>

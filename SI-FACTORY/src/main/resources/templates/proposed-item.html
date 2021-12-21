@@ -7,6 +7,12 @@
 
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+        body {
+            font-family: 'Poppins';
+        }
+    </style>
 </head>
 
 <body>
@@ -17,11 +23,11 @@
         <div class="card-body">
             <div class="justify-content-center">
                 <br>
-                <h2 class="text-center"
+                <h2
                         th:text="'Item dengan nama ' + ${nama} + ' , harga ' +${harga}+ ' , stok ' + ${stok} + ' , dan ID Kategori ' + ${id} + ' berhasil di-proposed.'">
                 </h2>
                 <br>
-                <a class="mx-2 btn btn-warning align-items-center" th:href="@{/}">Kembali</a>
+                <a class="mx-2 btn btn-warning align-items-center justify-content-center" th:href="@{/}">Kembali</a>
             </div>
         </div>
     </div>
