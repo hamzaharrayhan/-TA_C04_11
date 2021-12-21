@@ -104,15 +104,20 @@ public class ItemRestServiceImpl implements ItemRestService {
                 .retrieve()
                 .bodyToMono(HashMap.class)
                 .block();
-        HashMap result = (HashMap) response.get("result");
+
         ItemModel item = new ItemModel();
 
-        item.setUuid((String)result.get("uuid"));
-        item.setNama((String)result.get("nama"));
-        item.setHarga((Integer)result.get("harga"));
-        item.setStok((Integer)result.get("stok"));
-        item.setKategori((String)result.get("kategori"));
+        if (response.get("status").equals(404)) {
+            item = null;
+        } else {
+            HashMap result = (HashMap) response.get("result");
 
+            item.setUuid((String) result.get("uuid"));
+            item.setNama((String) result.get("nama"));
+            item.setHarga((Integer) result.get("harga"));
+            item.setStok((Integer) result.get("stok"));
+            item.setKategori((String) result.get("kategori"));
+        }
         return item;
     }
 
@@ -128,6 +133,24 @@ public class ItemRestServiceImpl implements ItemRestService {
         updateAfterSubmit(item, jumlahStokDitambahkan, pegawai, mesin);
 
         return item;
+    }
+
+    @Override
+    public Mono<String> putItem(ItemModel item) {
+        System.out.println(this.webClient
+                .put()
+                .uri("/api/item/"+item.getUuid())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .bodyValue(item)
+                .retrieve()
+                .bodyToMono(String.class).block());
+        return this.webClient
+                .put()
+                .uri("/api/item/"+item.getUuid())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .bodyValue(item)
+                .retrieve()
+                .bodyToMono(String.class);
     }
 
     public void updateAfterSubmit(ItemModel item, Integer jumlahStokDitambahkan, PegawaiModel pegawai, MesinModel mesin) {
@@ -150,24 +173,6 @@ public class ItemRestServiceImpl implements ItemRestService {
         // menambahkan add counter pada pegawai
         pegawaiService.addCounter(pegawai);
 
-    }
-
-    @Override
-    public Mono<String> putItem(ItemModel item) {
-        System.out.println(this.webClient
-                .put()
-                .uri("/api/item/"+item.getUuid())
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(item)
-                .retrieve()
-                .bodyToMono(String.class).block());
-        return this.webClient
-                .put()
-                .uri("/api/item/"+item.getUuid())
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(item)
-                .retrieve()
-                .bodyToMono(String.class);
     }
 
     @Override

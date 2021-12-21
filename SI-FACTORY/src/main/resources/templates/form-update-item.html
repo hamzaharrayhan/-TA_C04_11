@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 
 <head>
-    <title>21 Cineplux</title>
+    <title>Form Update Item</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -13,40 +13,63 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2>Update Bioskop</h2>
+                <h2>Update Item</h2>
                 <br>
-                <form th:action="@{/item/update}" th:object="${item}" method="POST">
+                <form th:action="@{/item/update}" th:object="${item}" method="POST" onsubmit="return confirm('Apakah anda sudah yakin?');">
                     <input type="hidden" th:field="*{uuid}" name="uuid">
 
-                    Nama Item : <input
-                        th:text="${item.nama}" type="hidden" name="nama" id="nama" th:field="*{nama}" th:value="*{nama}"><br>
-
-                    Harga Item : <input
-                        th:text="${item.harga}" type="hidden" name="harga" id="harga" th:field="*{harga}" th:value="*{harga}"><br>
-
-                    Stok Item : <input
-                        th:text="${item.stok}" type="hidden" name="stok" id="stok" th:field="*{stok}" th:value="*{stok}"><br>
-
-                    Kategori Item: <input
-                        th:text="${item.kategori}" type="hidden" name="kategori" id="kategori" th:field="*{kategori}" th:value="*{kategori}"><br>
-
-                    Jumlah Stok Ditambahkan : <input
-                        type="number" name="jumlahStokDitambahkan" id="jumlahStokDitambahkan"><br><br>
-
-                    Mesin :
-                    <select name="mesin">
-                        <option selected value=""> -- Pilih Mesin -- </option>
-                        <option th:each="mesin : ${listMesin}" th:value="${mesin.idMesin}" th:text="${mesin.nama}"></option>
-                    </select>
-                    <br><br>
+                    <table class="table table-responsive table-borderless">
+                        <tr>
+                            <th style="mso-cellspacing: 7px">Nama Item</th>
+                            <td>
+                                <input th:text="': ' + ${item.nama}" type="hidden" th:name="nama" th:id="nama"
+                                       th:field="*{nama}" th:value="*{nama}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="mso-cellspacing: 7px">Harga</th>
+                            <td>
+                                <input th:text="': ' + ${item.harga}" type="hidden" th:name="harga" th:id="harga"
+                                       th:field="*{harga}" th:value="*{harga}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="mso-cellspacing: 7px">Stok</th>
+                            <td>
+                                <input th:text="': ' + ${item.stok}" type="hidden" th:name="stok" th:id="stok"
+                                       th:field="*{stok}" th:value="*{stok}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="mso-cellspacing: 7px">Kategori</th>
+                            <td>
+                                <input th:text="': ' + ${item.kategori}" type="hidden" th:name="kategori" th:id="kategori"
+                                       th:field="*{kategori}" th:value="*{kategori}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="mso-cellspacing: 7px">Jumlah Stok Ditambahkan</th>
+                            <td>
+                                <input type="number" th:name="jumlahStokDitambahkan" th:id="jumlahStokDitambahkan">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="mso-cellspacing: 7px">Mesin</th>
+                            <td>
+                                <select name="mesin">
+                                    <option selected value=""> -- Pilih Mesin -- </option>
+                                    <option th:each="mesin : ${listMesin}" th:value="${mesin.idMesin}" th:text="${mesin.nama}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
 
                     <button class="btn btn-warning" type="submit">Update</button>
+                    <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>
                 </form><br>
-                <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>
             </div>
         </div>
     </div>
-    <a class="btn btn-primary" href="/">Home</a>
 </div>
 
 </body>

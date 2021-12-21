@@ -1,8 +1,6 @@
 package apap.group.assignment.SIFACTORY.controller;
 
-import apap.group.assignment.SIFACTORY.model.MesinModel;
-import apap.group.assignment.SIFACTORY.model.PegawaiModel;
-import apap.group.assignment.SIFACTORY.model.RequestUpdateItemModel;
+import apap.group.assignment.SIFACTORY.model.*;
 import apap.group.assignment.SIFACTORY.rest.ItemModel;
 import apap.group.assignment.SIFACTORY.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,9 @@ public class RequestUpdateItemController {
 
     @Autowired
     private ItemRestService itemRestService;
+
+    @Autowired
+    private ProduksiService produksiService;
 
     @GetMapping("/request-update-item/viewall")
     public String listRequestUpdateItem(Model model){
@@ -94,12 +95,23 @@ public class RequestUpdateItemController {
             Model model
     ) {
         PegawaiModel staf = pegawaiService.getPegawaiByUsername(username);
-        System.out.println("jumlah stok total = " + jumlahStokDitambahkan);
+//        System.out.println("jumlah stok total = " + jumlahStokDitambahkan);
+        System.out.println("ID REQ = " + idRequestUpdateItem);
+
         // do update
         requestUpdateItemRestService.updateReqItem(item, jumlahStokDitambahkan, mesin, username, idRequestUpdateItem);
 
         // set executed == TRUE
         requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem).setExecuted(true);
+
+        RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
+        // set Produksi to req update item
+        List<ProduksiModel> listProduksi = produksiService.getListOfProduksi();
+        for (ProduksiModel prod: listProduksi) {
+            if (prod.getRequestUpdateItem().getIdRequestUpdateItem() == idRequestUpdateItem) {
+                reqUpdateItem.setProduksi(prod);
+            }
+        }
 
         // add counter pegawai
         pegawaiService.addCounter(staf);

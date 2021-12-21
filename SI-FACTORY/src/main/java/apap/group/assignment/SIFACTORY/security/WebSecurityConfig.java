@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/item/propose-item").hasAuthority("FACTORY_MANAGER")
                 .antMatchers("/delivery/list-delivery").hasAnyAuthority("STAFF_KURIR", "STAFF_OPERASIONAL")
                 .antMatchers("/delivery/kirim/**").hasAuthority("STAFF_KURIR")
+                .antMatchers("/delivery/assign-kurir/**").hasAuthority("STAFF_OPERASIONAL")
                 .antMatchers("/item/update/**").hasAuthority("STAFF_GUDANG")
                 .antMatchers("/pegawai/viewall").hasAnyAuthority("ADMIN", "FACTORY_MANAGER")
                 .anyRequest().authenticated()
