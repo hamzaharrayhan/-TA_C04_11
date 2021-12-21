@@ -51,8 +51,8 @@ public class ProduksiModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private MesinModel mesin;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_request_update_item", referencedColumnName = "idRequestUpdateItem", nullable = true)
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+//    @JoinColumn(name = "id_request_update_item", referencedColumnName = "idRequestUpdateItem", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private RequestUpdateItemModel requestUpdateItem;
 
