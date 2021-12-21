@@ -22,15 +22,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/api/v1/**").permitAll()
-//                .antMatchers("/pegawai/add").hasAuthority("ADMIN")
-//                .antMatchers("/request-update-item/viewall").hasAnyAuthority("STAFF_GUDANG", "STAFF_OPERASIONAL")
-//                .antMatchers("/item/update-request/**").hasAuthority("STAFF_GUDANG")
-//                .antMatchers("/item/propose-item").hasAuthority("FACTORY_MANAGER")
-//                .antMatchers("/delivery/list-delivery").hasAnyAuthority("STAFF_KURIR", "STAFF_OPERASIONAL")
-//                .antMatchers("/delivery/kirim/**").hasAuthority("STAFF_KURIR")
-//                .antMatchers("/delivery/assign-kurir/**").hasAuthority("STAFF_OPERASIONAL")
-//                .antMatchers("/item/update/**").hasAuthority("STAFF_GUDANG")
-//                .antMatchers("/pegawai/viewall").hasAnyAuthority("ADMIN", "FACTORY_MANAGER")
+                .antMatchers("/pegawai/add").hasAuthority("ADMIN")
+                .antMatchers("/request-update-item/viewall").hasAnyAuthority("STAFF_GUDANG", "STAFF_OPERASIONAL")
+                .antMatchers("/item/update-request/**").hasAuthority("STAFF_GUDANG")
+                .antMatchers("/item/propose-item").hasAuthority("FACTORY_MANAGER")
+                .antMatchers("/delivery/list-delivery").hasAnyAuthority("STAFF_KURIR", "STAFF_OPERASIONAL")
+                .antMatchers("/delivery/kirim/**").hasAuthority("STAFF_KURIR")
+                .antMatchers("/delivery/assign-kurir/**").hasAuthority("STAFF_OPERASIONAL")
+                .antMatchers("/item/update/**").hasAuthority("STAFF_GUDANG")
+                .antMatchers("/pegawai/viewall").hasAnyAuthority("ADMIN", "FACTORY_MANAGER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -50,19 +50,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(encoder())
-                .withUser("admin").password(encoder().encode("admin8"))
-                .roles("ADMIN");
-    }
-
 //    @Autowired
-//    private UserDetailsService userDetailService;
-//
-//    @Autowired
-//    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception{
-//        auth.userDetailsService(userDetailService).passwordEncoder(encoder());
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .passwordEncoder(encoder())
+//                .withUser("admin").password(encoder().encode("admin8"))
+//                .roles("ADMIN");
 //    }
+
+    @Autowired
+    private UserDetailsService userDetailService;
+
+    @Autowired
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailService).passwordEncoder(encoder());
+    }
 }
