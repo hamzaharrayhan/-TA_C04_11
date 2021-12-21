@@ -12,6 +12,7 @@
 <body>
 <nav th:replace="'fragments/'+${role} :: navbar"></nav>
 <div class="container">
+    <br>
     <h2 style="text-align:center;">Daftar Request Update Item</h2>
     <br>
 
@@ -35,7 +36,7 @@
                 <td th:text="${requestUpdateItem.idItem}"></td>
                 <td th:text="${requestUpdateItem.idKategori}"></td>
                 <td th:text="${requestUpdateItem.tambahanStok}"></td>
-                <td th:text="${requestUpdateItem.tanggalRequest}"></td>
+                <td th:text="${#dates.format(requestUpdateItem.tanggalRequest, 'dd-MMM-yyyy')}"></td>
                 <td th:text="${requestUpdateItem.delivery?.idDelivery}"></td>
                 <td th:text="${requestUpdateItem.produksi?.idProduksi}"></td>
                 <td th:text="${requestUpdateItem.executed}"></td>
@@ -52,6 +53,7 @@
             </tr>
             </tbody>
         </table>
+        <br>
         <a class="mx-2 btn btn-warning" href="/">Home</a>
     </div>
 </div>

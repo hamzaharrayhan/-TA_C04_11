@@ -7,6 +7,12 @@
   <title> Propose Item </title>
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <style>
+    body {
+      font-family: 'Poppins';
+    }
+  </style>
 </head>
 
 <body>
@@ -21,19 +27,19 @@
           <form th:action="@{/item/propose-item}" method="POST" onsubmit="return confirm('Apakah anda sudah yakin?');">
             <input type="hidden" name="username" th:value="${#httpServletRequest.userPrincipal.name}">
             <label>Nama Item</label>
-            <input type="text" name="name" class="form-control" />
+            <input type="text" name="name" required class="form-control" />
 
             <br>
             <label>Harga Item</label>
-            <input type="number" name="price" class="form-control" />
+            <input type="number" name="price" required class="form-control" />
 
             <br>
             <label>Stok Item</label>
-            <input type="number" name="stock" class="form-control" />
+            <input type="number" name="stock" required class="form-control" />
 
             <br>
             <label>Kategori Item</label>
-            <select name="category" class="form-control">
+            <select name="category" required class="form-control">
               <option selected value=""> -- Pilih Kategori -- </option>
 <!--              <option th:each="idKategori : ${listidKategori}" th:value="${idKategori.ididKategori}" th:text="${idKategori.nama}"></option>-->
               <div th:each="idKategori : ${listKategori}">
