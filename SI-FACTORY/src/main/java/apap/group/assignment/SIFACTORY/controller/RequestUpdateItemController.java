@@ -13,9 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class RequestUpdateItemController {
@@ -107,12 +106,24 @@ public class RequestUpdateItemController {
         RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
         // set Produksi to req update item
         List<ProduksiModel> listProduksi = produksiService.getListOfProduksi();
-        for (ProduksiModel prod: listProduksi) {
-            System.out.println(prod.getRequestUpdateItem().getIdRequestUpdateItem());
-            if (prod.getRequestUpdateItem().getIdRequestUpdateItem() == idRequestUpdateItem) {
-                reqUpdateItem.setProduksi(prod);
-            }
+        List<Long> ListOfIdProduksi = new ArrayList<>();
+        for (ProduksiModel p:listProduksi) {
+            ListOfIdProduksi.add(p.getIdProduksi());
         }
+        Long max = Collections.max(ListOfIdProduksi);
+        System.out.println("id produksi " + max);
+        reqUpdateItem.setProduksi(produksiService.getProduksiByIdProduksi(max));
+
+//        for (ProduksiModel prod: listProduksi) {
+//            System.out.println("id produksi di list = " + prod.getIdProduksi());
+////            System.out.println(prod.getRequestUpdateItem().getIdRequestUpdateItem());
+//            if (!prod.getRequestUpdateItem().getIdRequestUpdateItem().equals(null)) {
+//                System.out.println("id req update di list = " + prod.getRequestUpdateItem().getIdRequestUpdateItem());
+//                if (prod.getRequestUpdateItem().getIdRequestUpdateItem() == idRequestUpdateItem) {
+//                    reqUpdateItem.setProduksi(prod);
+//                }
+//            }
+//        }
 
         // add counter pegawai
         pegawaiService.addCounter(staf);
