@@ -13,7 +13,7 @@ public class PageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString().toString().replace("[", "")
                 .replace("]","");
-        System.out.println("rolenya "+role);
+//        System.out.println("rolenya "+role);
         model.addAttribute("role", role);
         return "home";
     }

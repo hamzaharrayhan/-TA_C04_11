@@ -12,10 +12,16 @@
     body {
       font-family: 'Poppins';
     }
+    footer {
+      /*position:absolute;*/
+      bottom:0;
+      width:100%;
+    }
   </style>
 </head>
 
 <body>
+<nav th:replace="'fragments/'+${role} :: navbar" ></nav>
 <div class="container" sec:authorize="hasAuthority('FACTORY_MANAGER')">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -70,6 +76,7 @@
     </div>
   </div>
 </div>
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 
 </html>

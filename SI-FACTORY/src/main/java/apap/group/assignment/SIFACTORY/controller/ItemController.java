@@ -52,6 +52,10 @@ public class ItemController {
                 listKategori.add(mesin.getIdKategori());
             }
         }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
+        model.addAttribute("role", role);
         model.addAttribute("listKategori", listKategori);
         return "form-propose-item";
     }
@@ -62,15 +66,17 @@ public class ItemController {
             Model model,
             RedirectAttributes redirect
     ) {
-
         PegawaiModel admin = pegawaiService.getPegawaiByUsername(username);
         itemRestService.proposeItem(item);
         pegawaiService.addCounter(admin);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
+        model.addAttribute("role", role);
         model.addAttribute("nama", item.getName());
         model.addAttribute("harga", item.getPrice());
         model.addAttribute("stok", item.getStock());
         model.addAttribute("id", item.getCategory());
-
         return "proposed-item";
     }
 
@@ -79,7 +85,6 @@ public class ItemController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString().replace("[", "").replace("]", "");
         HashMap<String, List<ItemModel>> itemHashMap = itemRestService.retrieveListItem();
-
         model.addAttribute("role", role);
         model.addAttribute("itemHashMap", itemHashMap);
 
@@ -90,7 +95,10 @@ public class ItemController {
     public String updateItemForm (
             @PathVariable("uuid") String uuid, Model model){
         ItemModel item = itemRestService.getItemByUuid(uuid);
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
+        model.addAttribute("role", role);
         if (item != null) {
             List<MesinModel> listMesin = mesinService.getListMesinByKategori(item);
             model.addAttribute("item", item);
@@ -109,7 +117,10 @@ public class ItemController {
             Model model
     ) {
         itemRestService.updateItem(item, jumlahStokDitambahkan, mesin);
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
+        model.addAttribute("role", role);
         model.addAttribute("jumlahStokDitambahkan", jumlahStokDitambahkan);
         model.addAttribute("item", item);
         model.addAttribute("mesin", mesin);
@@ -120,7 +131,6 @@ public class ItemController {
     public String viewDetailItem(Model model, @PathVariable String uuid) {
         List<ProduksiModel> listProduksiByItem = new ArrayList<>();
         ItemModel item = itemRestService.getItemByUuid(uuid);
-
         List<ProduksiModel> listProduksi = produksiService.getListOfProduksi();
 
         for (ProduksiModel produksi : listProduksi) {
@@ -128,7 +138,10 @@ public class ItemController {
                 listProduksiByItem.add(produksi);
             }
         }
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
+        model.addAttribute("role", role);
         model.addAttribute("item", item);
         model.addAttribute("listProduksiByItem", listProduksiByItem);
         return "view-detail-item";

@@ -60,6 +60,9 @@ public class RequestUpdateItemController {
             Model model
     ) {
         RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
         try {
             List<MesinModel> listMesin = mesinService.getMesinList();
             List<MesinModel> listMesinByKategori = new ArrayList<>();
@@ -72,6 +75,7 @@ public class RequestUpdateItemController {
 //                System.out.println(mesin.getNama());
                 }
             }
+            model.addAttribute("role", role);
             model.addAttribute("stokTambahan", reqUpdateItem.getTambahanStok());
             model.addAttribute("idRequestUpdateItem", idRequestUpdateItem);
             model.addAttribute("item", item);
@@ -127,7 +131,10 @@ public class RequestUpdateItemController {
 
         // add counter pegawai
         pegawaiService.addCounter(staf);
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
+        model.addAttribute("role", role);
         model.addAttribute("jumlahStokDitambahkan", jumlahStokDitambahkan);
         model.addAttribute("item", item);
         model.addAttribute("mesin", mesin);
