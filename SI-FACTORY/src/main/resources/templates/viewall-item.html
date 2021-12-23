@@ -12,11 +12,16 @@
         body {
             font-family: 'Poppins';
         }
+        footer {
+            /*position:absolute;*/
+            bottom:0;
+            width:100%;
+        }
     </style>
 </head>
 
 <body>
-<nav th:replace="'fragments/fragment' :: navbar"></nav>
+<nav th:replace="'fragments/'+${role} :: navbar" ></nav>
 <div class="container-fluid">
     <br>
     <h1 style="text-align: center">Daftar Semua Item</h1>
@@ -55,5 +60,6 @@
         </div>
     </div>
 </div>
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 </html>

@@ -7,6 +7,29 @@
     <title> SIFACTORY </title>
     <object th:include="'fragments/'+${role} :: css" th:remove="tag"></object>
     <object th:include="'fragments/'+${role} :: js" th:remove="tag"></object>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+        body {
+            font-family: 'Poppins';
+        }
+        footer {
+            /*position:absolute;*/
+            bottom:0;
+            width:100%;
+        }
+        .content-3-6 .btn-fill {
+            font: 500 1.25rem/1.75rem Poppins, sans-serif;
+            background-image: linear-gradient(#524EEE, #736FFF);
+            padding: 0.75rem 1rem;
+            margin-top: 2.25rem;
+            border-radius: 0.75rem;
+            transition: 0.5s;
+        }
+        .content-3-6 .btn-fill:hover {
+            background-image: linear-gradient(#3A36D9, #5D59FE);
+            transition: 0.5s;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,22 +65,22 @@
                 <td th:text="${requestUpdateItem.executed}"></td>
                 <td th:if="${requestUpdateItem.executed == false}">
                     <div sec:authorize="hasAuthority('STAFF_GUDANG')">
-                        <a class="mx-2 btn btn-warning" th:href="@{/item/update-request/} + ${requestUpdateItem.idRequestUpdateItem} + @{/} + ${requestUpdateItem.idItem}">Update</a>
+                        <a class="mx-2 btn btn-warning text-white" th:href="@{/item/update-request/} + ${requestUpdateItem.idRequestUpdateItem} + @{/} + ${requestUpdateItem.idItem}">Update</a>
                     </div>
                 </td>
                 <td th:if="${requestUpdateItem.executed == true and requestUpdateItem.delivery?.idDelivery == null}">
                     <div sec:authorize="hasAuthority('STAFF_OPERASIONAL')">
-                        <a class="mx-2 btn btn-warning" th:href="@{/delivery/assign-kurir/} + ${requestUpdateItem.idRequestUpdateItem} + @{/} + ${requestUpdateItem.idItem}">Buat Delivery</a>
+                        <a class="mx-2 btn btn-warning text-white" th:href="@{/delivery/assign-kurir/} + ${requestUpdateItem.idRequestUpdateItem} + @{/} + ${requestUpdateItem.idItem}">Buat Delivery</a>
                     </div>
                 </td>
             </tr>
             </tbody>
         </table>
         <br>
-        <a class="mx-2 btn btn-warning" href="/">Home</a>
+        <a class="mx-2 btn btn-warning text-white" href="/">Home</a>
     </div>
 </div>
-
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 
 </html>
