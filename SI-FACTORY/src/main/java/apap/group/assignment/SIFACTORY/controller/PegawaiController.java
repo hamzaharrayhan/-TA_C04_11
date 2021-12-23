@@ -49,7 +49,7 @@ public class PegawaiController {
                 gaji.add(gajiTemp);
                 gajiTemp = 0;
             }
-            System.out.println(gaji);
+//            System.out.println(gaji);
         }
 
         model.addAttribute("role", role);
@@ -96,7 +96,8 @@ public class PegawaiController {
                 .replace("]","");
         model.addAttribute("role", role);
         model.addAttribute("pegawai", pegawai);
-        return "redirect:/";
+        model.addAttribute("username", usernameAddedPegawai);
+        return "added-pegawai";
     }
 
 }

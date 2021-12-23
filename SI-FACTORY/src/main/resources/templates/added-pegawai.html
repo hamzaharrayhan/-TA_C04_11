@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <title>Item Updated</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <style>
+    body {
+      font-family: 'Poppins';
+    }
+    footer {
+      position:absolute;
+      bottom:0;
+      width:100%;
+    }
+  </style>
+</head>
+
+<body>
+<nav th:replace="'fragments/'+${role} :: navbar" ></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2 th:text="'Pegawai dengan username ' + ${username} + ' berhasil ditambahkan'"></h2>
+        <br>
+        <a class="btn btn-warning" th:href="@{/pegawai/viewall}">Lihat semua pegawai</a>
+      </div>
+    </div>
+  </div>
+  <a class="btn btn-warning" href="/">Home</a>
+</div>
+<footer th:replace="fragments/fragment :: footer"></footer>
+</body>
+
+</html>
