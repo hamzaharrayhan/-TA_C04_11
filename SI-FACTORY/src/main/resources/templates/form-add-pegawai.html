@@ -27,27 +27,27 @@
                     <form th:action="@{/pegawai/add}" method="POST" onsubmit="return confirm('Apakah anda sudah yakin?');">
                         <input type="hidden" name="username" th:value="${#httpServletRequest.userPrincipal.name}">
                         <label>User Name</label>
-                        <input type="text" name="username" class="form-control" />
+                        <input type="text" name="username" required class="form-control" />
 
                         <br>
                         <label>Nama</label>
-                        <input type="text" name="nama" class="form-control" />
+                        <input type="text" name="nama" required class="form-control" />
 
                         <br>
                         <label>Email</label>
-                        <input type="email" name="email" class="form-control" />
+                        <input type="email" name="email" required class="form-control" />
 
                         <br>
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control" />
+                        <input type="password" name="password" required class="form-control" />
 
                         <br>
                         <label>Tanggal Lahir</label>
-                        <input type="date" name="tanggalLahir" class="form-control" />
+                        <input type="date" name="tanggalLahir" required class="form-control" />
 
                         <br>
                         <label>Role</label>
-                        <select name="role" class="form-control">
+                        <select name="role" required class="form-control">
                             <option selected value=""> -- Pilih Role -- </option>
                             <option th:each="role : ${listRole}" th:value="${role.idRole}" th:text="${role.namaRole}"></option>
                         </select>
