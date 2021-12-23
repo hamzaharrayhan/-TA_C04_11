@@ -48,7 +48,7 @@
                     </table>
                     <br>
                     Kurir yang bertugas: <br>
-                    <select class="form-control" aria-label="Default select example" name="kurir">
+                    <select class="form-control" aria-label="Default select example" required name="kurir">
                         <option selected value=""> -- Pilih Kurir -- </option>
                         <option th:each="kurir : ${listKurir}" th:value="${kurir.idPegawai}" th:text="${kurir.nama}"></option>
                     </select>
