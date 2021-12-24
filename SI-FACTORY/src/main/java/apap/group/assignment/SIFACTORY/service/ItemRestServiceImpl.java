@@ -126,12 +126,9 @@ public class ItemRestServiceImpl implements ItemRestService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails)principal).getUsername();
         PegawaiModel pegawai = pegawaiService.getPegawaiByUsername(username);
-
         item.setStok(item.getStok() + jumlahStokDitambahkan);
         putItem(item);
-
         updateAfterSubmit(item, jumlahStokDitambahkan, pegawai, mesin);
-
         return item;
     }
 

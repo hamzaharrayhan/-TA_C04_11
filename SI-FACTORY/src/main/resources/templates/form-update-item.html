@@ -64,13 +64,13 @@
                         <tr>
                             <th style="mso-cellspacing: 7px">Jumlah Stok Ditambahkan</th>
                             <td>
-                                <input type="number" th:name="jumlahStokDitambahkan" th:id="jumlahStokDitambahkan">
+                                <input type="number" th:name="jumlahStokDitambahkan" th:id="jumlahStokDitambahkan" required>
                             </td>
                         </tr>
                         <tr>
                             <th style="mso-cellspacing: 7px">Mesin</th>
                             <td>
-                                <select name="mesin">
+                                <select th:name="mesin" required>
                                     <option selected value=""> -- Pilih Mesin -- </option>
                                     <option th:each="mesin : ${listMesin}" th:value="${mesin.idMesin}" th:text="${mesin.nama}"></option>
                                 </select>
@@ -83,7 +83,8 @@
             </div>
         </div>
     </div>
-</div>
+    <a class="btn btn-outline-info" href="/">Home</a>
+</div><br>
 <footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 
