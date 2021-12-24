@@ -12,6 +12,11 @@
         body {
             font-family: 'Poppins';
         }
+        footer {
+            /*position:absolute;*/
+            bottom:0;
+            width:100%;
+        }
     </style>
 </head>
 
@@ -47,7 +52,7 @@
     </div>
     <a class="mx-2 btn btn-warning align-items-center" href="/">Home</a>
 </div>
-
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 
 </html>

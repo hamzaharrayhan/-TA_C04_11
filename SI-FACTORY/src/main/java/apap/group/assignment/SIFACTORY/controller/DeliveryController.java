@@ -65,8 +65,7 @@ public class DeliveryController {
 
         try {
             Map<Long,String> alamat = deliveryService.alamatCabang();
-            System.out.println(alamat);
-
+//            System.out.println(alamat);
             if (!alamat.get(delivery.getIdCabang()).isEmpty()){
                 String message = "Pengiriman ke alamat " + alamat.get(delivery.getIdCabang()) + " berhasil!";
                 model.addAttribute("message", message);
@@ -103,6 +102,10 @@ public class DeliveryController {
                     listKurir.add(pegawai);
                 }
             }
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String role = auth.getAuthorities().toString().toString().replace("[", "")
+                    .replace("]","");
+            model.addAttribute("role", role);
             model.addAttribute("reqUpdateItem", reqUpdateItem);
             model.addAttribute("item", item);
             model.addAttribute("idRequestUpdateItem", idRequestUpdateItem);
@@ -133,6 +136,10 @@ public class DeliveryController {
             }
         }
         pegawaiService.addCounter(pegawai);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
+        model.addAttribute("role", role);
         model.addAttribute("kurir", kurir);
         model.addAttribute("idRequestUpdateItem", idRequestUpdateItem);
         return "update-assign-kurir";

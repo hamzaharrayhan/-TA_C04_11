@@ -2,8 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <title>SI - FACTORY</title>
+  <title>Item Updated</title>
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
@@ -12,7 +11,7 @@
       font-family: 'Poppins';
     }
     footer {
-      /*position:absolute;*/
+      position:absolute;
       bottom:0;
       width:100%;
     }
@@ -25,12 +24,13 @@
   <div class="card m-4 p-4">
     <div class="card-body">
       <div class="justify-content-center">
-        <h2 th:text="'Item dengan uuid ' + ${uuid} + ' tidak ditemukan.'"></h2>
+        <h2 th:text="'Pegawai dengan username ' + ${username} + ' berhasil ditambahkan'"></h2>
         <br>
-        <a th:href="@{/item/viewall}" class="mx-2 btn btn-warning">Back</a>
+        <a class="btn btn-warning" th:href="@{/pegawai/viewall}">Lihat semua pegawai</a>
       </div>
     </div>
   </div>
+  <a class="btn btn-warning" href="/">Home</a>
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 </body>

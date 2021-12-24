@@ -5,5 +5,6 @@ import java.util.List;
 public interface ProduksiService {
     List <ProduksiModel> getListOfProduksi();
     void deleteProduksi(ProduksiModel produksi);
+    ProduksiModel getProduksiByIdProduksi(Long id);
     List<ProduksiModel> getListProduksiByCheckItem();
 }

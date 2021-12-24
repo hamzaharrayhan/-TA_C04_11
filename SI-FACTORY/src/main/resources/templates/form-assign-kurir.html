@@ -11,11 +11,16 @@
         body {
             font-family: 'Poppins';
         }
+        footer {
+            /*position:absolute;*/
+            bottom:0;
+            width:100%;
+        }
     </style>
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
+<nav th:replace="'fragments/'+${role} :: navbar" ></nav>
 <div class="container">
     <div class="card m-4 p-4">
         <div class="card-body">
@@ -41,9 +46,9 @@
                             <td>     : <input th:text="${reqUpdateItem.tambahanStok}" type="hidden" name="tambahanStok" th:value="${reqUpdateItem.tambahanStok}"><br></td>
                         </tr>
                     </table>
-                    <br><br>
+                    <br>
                     Kurir yang bertugas: <br>
-                    <select class="form-control" aria-label="Default select example" name="kurir">
+                    <select class="form-control" aria-label="Default select example" required name="kurir">
                         <option selected value=""> -- Pilih Kurir -- </option>
                         <option th:each="kurir : ${listKurir}" th:value="${kurir.idPegawai}" th:text="${kurir.nama}"></option>
                     </select>
@@ -57,7 +62,7 @@
     </div>
     <a class="btn btn-primary" href="/">Home</a>
 </div>
-
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 
 </html>
