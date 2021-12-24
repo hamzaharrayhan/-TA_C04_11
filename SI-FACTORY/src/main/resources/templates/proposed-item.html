@@ -9,6 +9,9 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -31,7 +34,7 @@
                         th:text="'Item dengan nama ' + ${nama} + ' , harga ' +${harga}+ ' , stok ' + ${stok} + ' , dan ID Kategori ' + ${id} + ' berhasil di-proposed.'">
                 </h2>
                 <br>
-                <a class="mx-2 btn btn-warning align-items-center justify-content-center" th:href="@{/}">Kembali</a>
+                <a class="mx-2 btn btn-primary align-items-center justify-content-center" th:href="@{/}">Kembali</a>
             </div>
         </div>
     </div>

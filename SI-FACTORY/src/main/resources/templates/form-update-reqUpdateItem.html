@@ -7,6 +7,9 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -68,13 +71,13 @@
                     </select>
                     <br><br>
 
-                    <button class="btn btn-warning" type="submit">Update</button>
+                    <button class="btn btn-primary" type="submit">Update</button>
                 </form><br>
 <!--                <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>-->
             </div>
         </div>
     </div>
-    <a class="btn btn-warning" href="/">Home</a><br><br>
+    <a class="btn btn-outline-info" href="/">Home</a><br><br>
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 </body>

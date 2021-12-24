@@ -7,6 +7,9 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -27,11 +30,12 @@
                 <h2 th:text="'Stok item dengan nama ' + ${item.nama} + ' pada kategori ' + ${item.kategori} + ' dengan harga '
                 + ${item.harga} + ' berhasil diupdate'"></h2>
                 <br>
-                <a class="btn btn-warning" th:href="@{/item/viewall}">Lihat semua item</a>
+                <a class="btn btn-primary" th:href="@{/item/viewall}">Lihat semua item</a>
             </div>
         </div>
     </div>
-    <a class="btn btn-warning" href="/">Home</a>
+    <a class="btn btn-outline-info" href="/">Home</a>
+    <br><br>
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 </body>

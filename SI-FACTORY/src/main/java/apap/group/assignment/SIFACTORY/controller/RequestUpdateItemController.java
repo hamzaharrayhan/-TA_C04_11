@@ -39,15 +39,25 @@ public class RequestUpdateItemController {
     private ProduksiService produksiService;
 
     @GetMapping("/request-update-item/viewall")
-    public String listRequestUpdateItem(Model model){
+    public String listRequestUpdateItem(Model model, String uuid){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString().toString().replace("[", "").replace("]","");
 
         List<RequestUpdateItemModel> listRequestUpdateItem = requestUpdateItemService.getRequestUpdateItemList();
+        ItemModel item = itemRestService.getItemByUuid(uuid);
+        List<String> namaItem = new ArrayList<>();
+
+        for (RequestUpdateItemModel reqItem: listRequestUpdateItem) {
+            if (reqItem.getIdItem().equals(item.getUuid())) {
+                namaItem.add(item.getNama());
+//                System.out.println(item.getNama());
+            }
+        }
 
         model.addAttribute("role", role);
         model.addAttribute("listRequestUpdateItem", listRequestUpdateItem);
-        model.addAttribute("activePage", "viewallRequest");
+        model.addAttribute("namaItem", namaItem);
+        model.addAttribute("activePage", "request");
 
         //Return view template yang diinginkan
         return "viewall-request-update-item";

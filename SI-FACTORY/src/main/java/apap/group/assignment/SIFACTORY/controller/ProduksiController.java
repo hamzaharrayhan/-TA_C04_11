@@ -27,6 +27,7 @@ public class ProduksiController {
                 .replace("]","");
         model.addAttribute("role", role);
         model.addAttribute("listProduksi", listProduksi);
+        model.addAttribute("activePage", "produksi");
 
         return "viewall-produksi";
     }

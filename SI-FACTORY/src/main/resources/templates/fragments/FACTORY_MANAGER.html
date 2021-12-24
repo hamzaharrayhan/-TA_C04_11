@@ -5,6 +5,11 @@
     <title>Home</title>
     <head th:fragment="css">
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+        <style>
+            nav{
+                background-color: #313E60;
+            }
+        </style>
     </head>
     <head th:fragment="js">
         <script
@@ -16,8 +21,8 @@
         <script th:src="@{/js/bootstrap.min.js}"></script>
     </head>
 <body>
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand font-weight-bold text-warning" href="#">SIFACTORY</a>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand font-weight-bold" style="color: #4DE5DD" href="#">SI-Factory</a>
     <button
             class="navbar-toggler"
             type="button"
@@ -31,31 +36,28 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
             <li th:class="${activePage == 'home'} ? 'font-weight-bold' : 'font-weight-regular'">
-                <a class="nav-item nav-link active text-secondary" th:href="@{/}">
+                <a class="nav-item nav-link active" th:href="@{/}">
                     Home<span class="sr-only">(current)</span>
                 </a>
             </li>
-            <li th:class="${activePage == 'home'} ? 'font-weight-bold' : 'font-weight-regular'">
-                <a th:href="@{/mesin/viewall}" class="nav-item nav-link active text-secondary">List Mesin</a>
+            <li th:class="${activePage == 'mesin'} ? 'font-weight-bold' : 'font-weight-regular'">
+                <a th:href="@{/mesin/viewall}" class="nav-item nav-link active">List Mesin</a>
             </li>
-            <li th:class="${activePage == 'home'} ? 'font-weight-bold' : 'font-weight-regular'">
-                <a th:href="@{/item/viewall}" class="nav-item nav-link active text-secondary">List Item</a>
+            <li th:class="${activePage == 'propose'} ? 'font-weight-bold' : 'font-weight-regular'">
+                <a th:href="@{/item/propose-item}" class="nav-item nav-link active">Propose Item</a>
             </li>
-            <li th:class="${activePage == 'home'} ? 'font-weight-bold' : 'font-weight-regular'">
-                <a th:href="@{/item/propose-item}" class="nav-item nav-link active text-secondary">Propose Item</a>
+            <li th:class="${activePage == 'produksi'} ? 'font-weight-bold' : 'font-weight-regular'">
+                <a th:href="@{/produksi/viewall}" class="nav-item nav-link active">Lihat Semua Produksi</a>
             </li>
-            <li th:class="${activePage == 'home'} ? 'font-weight-bold' : 'font-weight-regular'">
-                <a th:href="@{/produksi/viewall}" class="nav-item nav-link active text-secondary">Lihat Semua Produksi</a>
-            </li>
-            <li th:class="${activePage == 'home'} ? 'font-weight-bold' : 'font-weight-regular'">
-                <a th:href="@{/pegawai/viewall}" class="nav-item nav-link active text-secondary">Lihat Semua Pegawai</a>
+            <li th:class="${activePage == 'pegawai'} ? 'font-weight-bold' : 'font-weight-regular'">
+                <a th:href="@{/pegawai/viewall}" class="nav-item nav-link active">Lihat Semua Pegawai</a>
             </li>
         </ul>
         <ul class="navbar-nav pull-right">
             <a class="nav-item nav-link active">Logged in as Manager</a>
         </ul>
         <ul class="navbar-nav pull-right">
-            <a class="nav-item nav-link active btn-danger" th:href="@{/logout}">Logout</a>
+            <a class="nav-item nav-link active btn btn-primary" th:href="@{/logout}">Logout</a>
         </ul>
     </div>
 </nav>

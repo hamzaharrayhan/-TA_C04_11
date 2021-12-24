@@ -9,6 +9,9 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -60,8 +63,8 @@
                         <br>
                         <div sec:authorize="hasAuthority('ADMIN')">
 <!--                        <div>-->
-                            <button type="submit" class="btn btn-warning">Simpan</button>
-                            <a class="btn btn-outline-warning" th:href="@{/}">Home</a>
+                            <a class="btn btn-outline-info" th:href="@{/}">Home</a>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>

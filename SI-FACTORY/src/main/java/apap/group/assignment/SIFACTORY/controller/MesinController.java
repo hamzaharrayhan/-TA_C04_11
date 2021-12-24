@@ -27,6 +27,7 @@ public class MesinController {
                 .replace("]","");
         model.addAttribute("role", role);
         model.addAttribute("listMesin", listMesin);
+        model.addAttribute("activePage", "mesin");
 
         return "viewall-mesin";
     }

@@ -8,6 +8,9 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -27,8 +30,8 @@
             <div class="justify-content-center">
                 <h2 style="color:red" th:text="'Pegawai dengan username ' + ${username} + ' gagal ditambahkan karena user dengan username tersebut sudah tersedia.'"></h2>
                 <br>
-                <a th:href="@{/pegawai/add}" class="mx-2 btn btn-warning">Tambah Pegawai Baru</a>
-                <a class="btn btn-primary" th:href="@{/}">Home</a>
+                <a th:href="@{/pegawai/add}" class="mx-2 btn btn-primary">Tambah Pegawai Baru</a>
+                <a class="btn btn-outline-info" th:href="@{/}">Home</a>
             </div>
         </div>
     </div>
