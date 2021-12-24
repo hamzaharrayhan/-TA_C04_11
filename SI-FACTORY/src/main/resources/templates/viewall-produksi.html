@@ -65,12 +65,11 @@
             </table>
         </div>
         <div th:unless="${listProduksi.size != 0}">
-            <h3>Produksi belum dilakukan.</h3>
+            <h3>Produksi belum pernah dilakukan.</h3>
         </div>
+        <a class="btn btn-outline-info" th:href="@{/}">Home</a>
     </div>
     <br>
-    <a class="mx-2 btn btn-outline-info align-items-center" href="/">Home</a>
-    <br><br>
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 </body>
