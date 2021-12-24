@@ -55,7 +55,7 @@ public class PegawaiController {
         model.addAttribute("role", role);
         model.addAttribute("listPegawai", listPegawai);
         model.addAttribute("gaji", gaji);
-        model.addAttribute("activePage", "viewallPegawai");
+        model.addAttribute("activePage", "pegawai");
 
         //Return view template yang diinginkan
         return "viewall-pegawai";

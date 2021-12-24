@@ -8,6 +8,9 @@
     <object th:include="'fragments/'+${role} :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -28,6 +31,7 @@
                 <h2 th:text="${message}"></h2>
                 <br>
                 <a class="btn btn-primary" href="/">Home</a>
+                <br><br>
             </div>
         </div>
     </div>

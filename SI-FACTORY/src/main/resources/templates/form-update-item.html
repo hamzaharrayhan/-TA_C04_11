@@ -7,6 +7,9 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -74,9 +77,8 @@
                             </td>
                         </tr>
                     </table>
-
-                    <button class="btn btn-warning" type="submit">Update</button>
-                    <a class="btn btn-primary" th:href="@{/item/viewall}">Cancel</a>
+                    <a class="btn btn-outline-info" th:href="@{/item/viewall}">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Update</button>
                 </form><br>
             </div>
         </div>

@@ -9,6 +9,9 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -48,7 +51,7 @@
                 </tr>
                 </tbody>
             </table>
-            <a class="btn btn-primary" th:href="@{/}">Home</a>
+            <a class="btn btn-outline-info" th:href="@{/}">Home</a>
         </div>
         <div th:unless="*{listMesin.size() != 0}">
             <h2 th:text="'Belum ada mesin yang ditambahkan.'"></h2>

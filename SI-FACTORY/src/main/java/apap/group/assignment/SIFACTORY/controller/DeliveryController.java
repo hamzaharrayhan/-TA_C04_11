@@ -42,6 +42,7 @@ public class DeliveryController {
         String role = auth.getAuthorities().toString().toString().replace("[", "").replace("]", "");
         List<DeliveryModel> listDeliveryOp = deliveryService.getListOfDelivery();
         model.addAttribute("role", role);
+        model.addAttribute("activePage", "delivery");
 
         Long pegawai = pegawaiService.getPegawaiByUsername(auth.getName()).getIdPegawai();
         if (role.equalsIgnoreCase("STAFF_KURIR")){

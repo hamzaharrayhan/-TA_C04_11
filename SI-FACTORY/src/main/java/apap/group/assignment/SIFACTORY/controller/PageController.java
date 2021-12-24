@@ -15,6 +15,7 @@ public class PageController {
                 .replace("]","");
 //        System.out.println("rolenya "+role);
         model.addAttribute("role", role);
+        model.addAttribute("activePage", "home");
         return "home";
     }
 

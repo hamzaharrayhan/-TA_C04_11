@@ -9,6 +9,9 @@
     <object th:include="'fragments/'+${role} :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -54,7 +57,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="requestUpdateItem : ${listRequestUpdateItem}">
+            <tr th:each="requestUpdateItem, iterationStatus : ${listRequestUpdateItem}"
+                th:style="${iterationStatus.even} ? 'background-color: #f2f2f2;'">
                 <td th:text="${requestUpdateItem.idCabang}"></td>
                 <td th:text="${requestUpdateItem.idItem}"></td>
                 <td th:text="${requestUpdateItem.idKategori}"></td>
@@ -77,7 +81,8 @@
             </tbody>
         </table>
         <br>
-        <a class="mx-2 btn btn-warning text-white" href="/">Home</a>
+        <a class="mx-2 btn btn-outline-info" href="/">Home</a>
+        <br><br>
     </div>
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>

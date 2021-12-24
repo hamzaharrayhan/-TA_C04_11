@@ -9,6 +9,9 @@
     <object th:include="'fragments/fragment' :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -42,7 +45,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="item, iterationStatus : ${entri.value}"
-                    th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                    th:style="${iterationStatus.even} ? 'background-color: #f2f2f2;'">
                     <td th:text="${iterationStatus.count}"></td>
                     <td th:text="${item.uuid}"></td>
                     <td th:text="${item.nama}" name="nama" id="nama" th:value="*{nama}" required></td>
