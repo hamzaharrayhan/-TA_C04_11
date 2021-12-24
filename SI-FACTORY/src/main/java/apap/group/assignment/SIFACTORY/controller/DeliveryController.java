@@ -129,7 +129,8 @@ public class DeliveryController {
     ){
         PegawaiModel pegawai = pegawaiService.getPegawaiByUsername(username);
         RequestUpdateItemModel reqUpdateItem = requestUpdateItemService.getRequestUpdateItemByIdRequestUpdateItem(idRequestUpdateItem);
-        deliveryService.addDelivery(reqUpdateItem, pegawai, kurir);
+//        deliveryService.addDelivery(reqUpdateItem, pegawai, kurir);
+        deliveryService.addDelivery(reqUpdateItem, kurir, kurir);
         List<DeliveryModel> listDelivery = deliveryService.getListOfDelivery();
         for (DeliveryModel deliv: listDelivery) {
             if (deliv.getRequestUpdateItem().getIdRequestUpdateItem() == idRequestUpdateItem) {
