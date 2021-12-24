@@ -9,6 +9,9 @@
     <object th:include="'fragments/'+${role} :: js" th:remove="tag"></object>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <style>
+        nav{
+            background-color: #313E60;
+        }
         body {
             font-family: 'Poppins';
         }
@@ -38,7 +41,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="pegawai, iter : ${listPegawai}">
+            <tr th:each="pegawai, iter : ${listPegawai}"
+                th:style="${iter.even} ? 'background-color: #f2f2f2;'">
                 <td th:text="${iter.count}"</td>
                 <td th:text="${pegawai.nama}"></td>
                 <td th:text="${pegawai.role.namaRole}"></td>
@@ -50,7 +54,9 @@
             </tbody>
         </table>
     </div>
-    <a class="mx-2 btn btn-warning align-items-center" href="/">Home</a>
+    <br>
+    <a class="mx-2 btn btn-outline-info align-items-center" href="/">Home</a>
+    <br><br>
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 </body>

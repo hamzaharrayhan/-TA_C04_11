@@ -47,7 +47,7 @@ public class RequestUpdateItemController {
 
         model.addAttribute("role", role);
         model.addAttribute("listRequestUpdateItem", listRequestUpdateItem);
-        model.addAttribute("activePage", "viewallRequest");
+        model.addAttribute("activePage", "request");
 
         //Return view template yang diinginkan
         return "viewall-request-update-item";

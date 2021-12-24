@@ -57,6 +57,7 @@ public class ItemController {
                 .replace("]","");
         model.addAttribute("role", role);
         model.addAttribute("listKategori", listKategori);
+        model.addAttribute("activePage", "propose");
         return "form-propose-item";
     }
 
