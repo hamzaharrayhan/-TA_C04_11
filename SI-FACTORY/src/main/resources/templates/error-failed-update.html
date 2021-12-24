@@ -25,7 +25,7 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 style="color:red" th:text="'Item dengan nama ' + ${item.nama} + ' dan ' + ${item.uuid} + ' gagal diupdate karena gagal melakukan request ke SI-ITEM atau tambahan stok kurang dari sama dengan 0'"></h2>
+                <h2 style="color:red" th:text="'Item dengan nama ' + ${item.nama} + ' dan uuid ' + ${item.uuid} + ' gagal diupdate karena gagal melakukan request ke SI-ITEM atau tambahan stok kurang dari sama dengan 0'"></h2>
                 <br>
                 <a th:href="@{/item/update/} + ${item.uuid}" class="mx-2 btn btn-warning">Update Item</a>
                 <a class="btn btn-primary" th:href="@{/}">Home</a>
