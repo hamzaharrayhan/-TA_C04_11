@@ -48,6 +48,7 @@
             <tr>
                 <th>ID Cabang</th>
                 <th>ID Item</th>
+                <th>Nama Item</th>
                 <th>ID Kategori</th>
                 <th>Tambahan Stok</th>
                 <th>Tanggal Request</th>
@@ -61,6 +62,13 @@
                 th:style="${iterationStatus.even} ? 'background-color: #f2f2f2;'">
                 <td th:text="${requestUpdateItem.idCabang}"></td>
                 <td th:text="${requestUpdateItem.idItem}"></td>
+                <div th:each="entri, stat: ${itemHashMap}">
+                    <div th:each="item, iter : ${entri.value}">
+                        <div th:if="${item.uuid == requestUpdateItem.idItem}">
+                            <td th:text="${item.nama}"></td>
+                        </div>
+                    </div>
+                </div>
                 <td th:text="${requestUpdateItem.idKategori}"></td>
                 <td th:text="${requestUpdateItem.tambahanStok}"></td>
                 <td th:text="${#dates.format(requestUpdateItem.tanggalRequest, 'dd-MMM-yyyy')}"></td>

@@ -44,10 +44,12 @@ public class RequestUpdateItemController {
         String role = auth.getAuthorities().toString().toString().replace("[", "").replace("]","");
 
         List<RequestUpdateItemModel> listRequestUpdateItem = requestUpdateItemService.getRequestUpdateItemList();
+        HashMap<String, List<ItemModel>> itemHashMap = itemRestService.retrieveListItem();
 
         model.addAttribute("role", role);
         model.addAttribute("listRequestUpdateItem", listRequestUpdateItem);
         model.addAttribute("activePage", "request");
+        model.addAttribute("itemHashMap", itemHashMap);
 
         //Return view template yang diinginkan
         return "viewall-request-update-item";
