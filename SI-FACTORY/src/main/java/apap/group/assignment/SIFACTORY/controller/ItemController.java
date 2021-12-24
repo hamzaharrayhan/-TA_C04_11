@@ -106,7 +106,7 @@ public class ItemController {
             return "form-update-item";
         }
         model.addAttribute("uuid", uuid);
-        return "error-update-item";
+        return "error-item-null";
     }
 
     @PostMapping("/update")
@@ -116,15 +116,26 @@ public class ItemController {
             @RequestParam("mesin") MesinModel mesin,
             Model model
     ) {
-        itemRestService.updateItem(item, jumlahStokDitambahkan, mesin);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString().toString().replace("[", "")
                 .replace("]","");
-        model.addAttribute("role", role);
-        model.addAttribute("jumlahStokDitambahkan", jumlahStokDitambahkan);
-        model.addAttribute("item", item);
-        model.addAttribute("mesin", mesin);
-        return "update-item";
+        String response = itemRestService.putItem(item).block();
+
+        if (response.contains("updated") && (jumlahStokDitambahkan > 0)) {
+            itemRestService.updateItem(item, jumlahStokDitambahkan, mesin);
+            model.addAttribute("role", role);
+            model.addAttribute("jumlahStokDitambahkan", jumlahStokDitambahkan);
+            model.addAttribute("item", item);
+            model.addAttribute("mesin", mesin);
+            return "update-item";
+        } else {
+            model.addAttribute("role", role);
+            model.addAttribute("item", item);
+            return "error-failed-update";
+        }
+
+
+
     }
 
     @GetMapping("/view/{uuid}")
@@ -133,17 +144,23 @@ public class ItemController {
         ItemModel item = itemRestService.getItemByUuid(uuid);
         List<ProduksiModel> listProduksi = produksiService.getListOfProduksi();
 
-        for (ProduksiModel produksi : listProduksi) {
-            if (produksi.getIdItem().equals(item.getUuid())) {
-                listProduksiByItem.add(produksi);
-            }
-        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String role = auth.getAuthorities().toString().toString().replace("[", "")
                 .replace("]","");
+
         model.addAttribute("role", role);
-        model.addAttribute("item", item);
-        model.addAttribute("listProduksiByItem", listProduksiByItem);
-        return "view-detail-item";
+        if (item == null) {
+            model.addAttribute("uuid", uuid);
+            return "error-item-null";
+        } else {
+            for (ProduksiModel produksi : listProduksi) {
+                if (produksi.getIdItem().equals(item.getUuid())) {
+                    listProduksiByItem.add(produksi);
+                }
+            }
+            model.addAttribute("item", item);
+            model.addAttribute("listProduksiByItem", listProduksiByItem);
+            return "view-detail-item";
+        }
     }
 }
