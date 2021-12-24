@@ -11,12 +11,22 @@
         body {
             font-family: 'Poppins';
         }
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+        footer {
+            /*position:absolute;*/
+            bottom:0;
+            width:100%;
+        }
     </style>
 </head>
 
 <body>
 <nav th:replace="'fragments/'+${role} :: navbar"></nav>
 <div class="container">
+    <br><br>
     <h2>List of Delivery</h2>
     <br>
     <table class="table">
@@ -50,9 +60,10 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary" href="/">Home</a>
+    <a class="btn btn-warning" href="/">Home</a>
+    <br><br><br>
 </div>
-
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 
 </html>

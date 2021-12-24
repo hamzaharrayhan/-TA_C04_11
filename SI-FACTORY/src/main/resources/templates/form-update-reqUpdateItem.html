@@ -10,11 +10,16 @@
         body {
             font-family: 'Poppins';
         }
+        footer {
+            /*position:absolute;*/
+            bottom:0;
+            width:100%;
+        }
     </style>
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
+<nav th:replace="'fragments/'+${role} :: navbar" ></nav>
 <div class="container">
     <div class="card m-4 p-4">
         <div class="card-body">
@@ -57,7 +62,7 @@
 <!--                    <input type="number" name="jumlahStokDitambahkan" id="jumlahStokDitambahkan">-->
 
                     Mesin : <br>
-                    <select class="form-control" aria-label="Default select example" name="mesin">
+                    <select class="form-control" aria-label="Default select example" required name="mesin">
                         <option selected value=""> -- Pilih Mesin -- </option>
                         <option th:each="mesin : ${listMesin}" th:value="${mesin.idMesin}" th:text="${mesin.nama}"></option>
                     </select>
@@ -69,9 +74,9 @@
             </div>
         </div>
     </div>
-    <a class="btn btn-primary" href="/">Home</a>
+    <a class="btn btn-warning" href="/">Home</a><br><br>
 </div>
-
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
 
 </html>

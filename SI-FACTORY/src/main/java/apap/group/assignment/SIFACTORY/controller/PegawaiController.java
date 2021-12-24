@@ -49,7 +49,7 @@ public class PegawaiController {
                 gaji.add(gajiTemp);
                 gajiTemp = 0;
             }
-            System.out.println(gaji);
+//            System.out.println(gaji);
         }
 
         model.addAttribute("role", role);
@@ -66,6 +66,10 @@ public class PegawaiController {
         PegawaiModel pegawai = new PegawaiModel();
         List<RoleModel> listRole = roleService.getListRole();
         System.out.println(listRole);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
+        model.addAttribute("role", role);
         model.addAttribute("pegawai", pegawai);
         model.addAttribute("listRole", listRole);
         return "form-add-pegawai";
@@ -87,8 +91,13 @@ public class PegawaiController {
         }
         pegawaiService.addCounter(admin);
         pegawaiService.addPegawai(pegawai);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString().toString().replace("[", "")
+                .replace("]","");
+        model.addAttribute("role", role);
         model.addAttribute("pegawai", pegawai);
-        return "redirect:/";
+        model.addAttribute("username", usernameAddedPegawai);
+        return "added-pegawai";
     }
 
 }
