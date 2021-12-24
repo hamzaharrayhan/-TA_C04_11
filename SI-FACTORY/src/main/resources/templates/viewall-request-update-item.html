@@ -47,6 +47,7 @@
             <thead>
             <tr>
                 <th>ID Cabang</th>
+                <th>Nama Item</th>
                 <th>ID Item</th>
                 <th>ID Kategori</th>
                 <th>Tambahan Stok</th>
@@ -60,6 +61,9 @@
             <tr th:each="requestUpdateItem, iterationStatus : ${listRequestUpdateItem}"
                 th:style="${iterationStatus.even} ? 'background-color: #f2f2f2;'">
                 <td th:text="${requestUpdateItem.idCabang}"></td>
+                <div th:each="nama, iter : ${namaItem}">
+                    <td th:if="${iter.count} == ${iterationStatus.count}" th:text="${nama}"></td>
+                </div>
                 <td th:text="${requestUpdateItem.idItem}"></td>
                 <td th:text="${requestUpdateItem.idKategori}"></td>
                 <td th:text="${requestUpdateItem.tambahanStok}"></td>
